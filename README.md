@@ -1,10 +1,14 @@
 King of the Castle 
 ====================
 
-King of the Castle is an application for managing a
+**King of the Castle** is an application for managing a
 [single elimination tournament](http://en.wikipedia.org/wiki/Single-elimination_tournament)
 
-The audience for such an application would be the many amateur sports clubs that hold such tournaments regularly.
+
+My local tennis club has a weekly tournament on Saturday mornings called the [Wee Weekly](http://stgeorgetennis.ca/weeweekly.php). Players are assigned a ranking number and this changes from week to week depending on their standing in each tournament.  The process for managing this is by manually inputing people's names and previous rankings in an excel spreadsheet to calculate the next weeks rankings then manually changing the HTML code on the results page to reflect the latest results.  This can be a time consuming process.  The goal of **King of the Castle** is to make the process of determining the rankings quicker and easier and provide usable output that can be easily posted on the clubs website.
+
+This is not a unique problem and an attempt will be made to make the application generic with extension points so that the application can be used for other sports tournaments.  The audience for such an application would be the many amateur sports clubs that hold such tournaments regularly.
+
 
 The application uses the following technologies:
 

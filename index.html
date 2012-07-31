@@ -1,0 +1,148 @@
+<html lang="en">
+
+<head>
+	<title>Players Draw</title>
+	<style type="text/css">
+	body  {margin:0;padding:0;background-color:#FFFFFF;overflow:hidden}
+
+	canvas{position:absolute; width: 800px; height:600px; border-style:solid; border-width:2px;}
+
+        input[type="text"] {
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        -ms-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        color: #aaa;
+        }
+        [contenteditable]:hover,
+        [contenteditable]:focus,
+        input[type="text"]:hover,
+        input[type="text"]:focus {
+        outline: none;
+        color: black;
+        }
+
+    #tournamentTitle{left:20px; width:800px;margin-top:5px; visibility:hidden;}
+    #mycanvas{ top:40px; left:340px;}
+    #leftColumn { position:relative; top: 10px; left: 20px; width 300px; }
+    #matchEditor,  #configureTournament, #loadTournament, #ChooseTournamentType   { visibility:hidden;}
+    #begin {  padding-top:50px;}
+
+    #leftColumn div { position:absolute; top: 10px; left: 20px; width:300px; }
+
+	</style>
+
+
+ <script type="text/javascript" src="PPUtils.js"></script>
+ <script type="text/javascript" src="PPCanvasView.js"></script>
+ <script type="text/javascript" src="PPEditController.js"></script>
+ <script type="text/javascript" src="PPStateManager.js"></script>
+ <script type="text/javascript" src="PPTournamentLoader.js"></script>
+ <script type="text/javascript" src="PPFileManager.js"></script>
+ <script type="text/javascript" src="PPPlayer.js"></script>
+ <script type="text/javascript" src="PPPoint.js"></script>
+
+ <script type="text/javascript" src="PPTournament.js"></script>
+ <script type="text/javascript" src="PPCribTournament.js"></script>
+ <script type="text/javascript" src="PPTennisTournament.js"></script>
+
+ <script type="text/javascript" src="PPMatch.js"></script>
+ <script type="text/javascript" src="main.js"></script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+<div id="tournamentTitle">
+    <center><input id="tournamentNameTextField" type="text" size="50" placeholder="Tournament Name" value=""></center>
+</div>
+
+
+
+<div id="leftColumn">
+
+    <div id="begin">
+        <input type="submit" value="New Tournament" onclick="stateManager.newTournament();"/>
+        <input type="submit" value="Load Tournament" onclick="stateManager.loadTournament();"/>
+    </div>
+
+    <div id="loadTournament">
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input id="fileLoader" type="file" >
+    </div>
+
+    <div id="chooseTournamentType">
+        Choose Tournament Type: <BR>
+        <blah id="tournamentTypeList">
+        <script type="text/javascript">
+            console.log("TODO -- push this radio button logic into the tournament loader.  Use constant for radio button name..");
+            for( var i = 0; i < tournamentLoader.tournamentTypes.length; i ++ ) {
+              var typeName = tournamentLoader.tournamentTypes[i].typeName();
+              document.write( typeName + "<input id='tTypeRadio" + i + "' name='tType' type='radio' value='" + typeName + "'>" + "<BR>");
+            }
+        </script>
+        </blah>
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input type="submit" value="configure" onclick="stateManager.configureTournament();"/>
+    </div>
+
+    <div id="configureTournament">
+        How many players will be in the tournament?<br>
+        <select id="numberOfPlayersCombo" name="playerNumber" onChange="handlePlayerNumberCombo(this)">
+            <option value="0">3 to 4</option>
+            <option value="1">5 to 8 </option>
+            <option value="2">9 to 16</option>
+            <option value="3" selected>17 to 32</option>
+            <option value="4">33 to 64</option>
+        </select>
+
+        <BR>
+        <input type="checkbox" name="vehicle" value="Doubles" /> Doubles <br> TODO (only show if Tennis Tournament Type)<br />
+
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input type="submit" value="start" onclick="stateManager.startTournament();"/>
+
+    </div>
+
+    <div id="matchEditor">
+        <table>
+            <thead>
+                    <tr><td>Player</td><td>Winner</td></tr>
+            </thead>
+            <tr>
+                <td><input id="player1TextField" type="text" size="25" value="" onkeyup="editController.updatePlayer1(this.id);"></td>
+                <td><input id="player1WinnerRadio" type="radio" name="winner" value="player1" onclick="editController.setMatchWinner();"></td>
+            </tr>
+            <tr>
+                <td><input id="player2TextField" type="text" size="25" value="" onkeyup="editController.updatePlayer2(this.id);"></td>
+                <td><input id="player2WinnerRadio" type="radio" name="winner" value="player2" onclick="editController.setMatchWinner();"></td>
+            </tr>
+        </table>
+         <BR><BR>
+
+
+        <input id="saveFileName"
+               type="text" value="tournament.json" placeholder="filename.txt">
+
+        <a href="data:application/json;charset=utf-8, blah blah blah"
+           download="output.json"
+           target="_blank"
+           onclick="PPFileManager.createFile(this);"
+           id="saveData">Download</a>
+
+    </div>
+
+</div>
+
+<canvas id="myCanvas" width="800" height="600" ></canvas>
+
+</body>
+
+
+</html>
