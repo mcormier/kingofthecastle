@@ -1,0 +1,82 @@
+<html lang="en">
+
+<head>
+	<title>Players Draw</title>
+	<style type="text/css">
+        body  {margin:0;padding:0;background-color:#FFFFFF;overflow:hidden}
+        canvas{position:absolute; width: 800px; height:600px; border-style:solid; border-width:2px;}
+        #mycanvas{ top:40px; left:340px;}
+        #leftColumn { position:relative; top: 10px; left: 20px; width 300px; }
+        #leftColumn div { position:absolute; top: 10px; left: 20px; width:300px; }
+	</style>
+
+
+
+
+ <script type="text/javascript" src="javascript/demo.js"></script>
+ <script type="text/javascript">
+     function initializeData(selIndex) {
+       // Player number = 2 to the power of (selIndex + 2)
+       // (0,1,2,3,4) ==> (4,8,16,32,64)
+       tournament.createBlankData(Math.pow(2,selIndex + 2));
+     }
+
+     function handlePlayerNumberCombo(combo) {
+       var selIndex = combo.selectedIndex;
+
+       initializeData(selIndex);
+       canvasView.redraw();
+     }
+
+     window.onload = function() {
+
+       initializeData($("numberOfPlayersCombo").selectedIndex);
+       var canvas = $("myCanvas");
+       canvasView.setCanvas(canvas);
+       canvasView.redraw()
+     };
+
+     var tournament = new PPTennisTournament();
+     var canvasView = new PPCanvasView(tournament);
+
+
+ </script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+
+
+<div id="leftColumn">
+
+
+    <div id="configureTournament">
+        <p>Demo of displaying a tournament tree using an HTML canvas.</p>
+
+        How many players will be in the tournament?<br>
+        <select id="numberOfPlayersCombo" name="playerNumber" onChange="handlePlayerNumberCombo(this)">
+            <option value="0">3 to 4</option>
+            <option value="1">5 to 8 </option>
+            <option value="2">9 to 16</option>
+            <option value="3" selected>17 to 32</option>
+            <option value="4">33 to 64</option>
+        </select>
+
+    </div>
+
+
+
+</div>
+
+<canvas id="myCanvas" width="800" height="600" ></canvas>
+
+</body>
+
+
+</html>
