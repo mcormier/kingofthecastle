@@ -159,7 +159,7 @@ PPCanvasView.prototype.maxPlayerCountChanged = function(maxPlayerCount) {
 PPCanvasView.prototype.handleClick = function (e) {
        var mouseLocation = PPPoint.pointFromCanvasMouseEvent(this.canvas, e);
        var selectedMatch = null;
-       var rounds = tournament.rounds;
+       var rounds = this.tournament.rounds;
 
        for (var i = 0; i < rounds.length; i++) {
          for (var j = 0; j < rounds[i].length; j++ ) {
@@ -175,7 +175,7 @@ PPCanvasView.prototype.handleClick = function (e) {
          }
        }
 
-       tournament.selectedMatch = selectedMatch;
+       this.tournament.selectedMatch = selectedMatch;
        this.redraw();
 }
 
