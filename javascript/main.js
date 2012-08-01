@@ -27,7 +27,7 @@
        var selIndex = combo.selectedIndex;
 
        initializeData(selIndex);
-       theApp.canvasView.redraw();
+       theApp.redraw();
      }
 
      function initializeData(selIndex) {
@@ -74,18 +74,9 @@
      }
      function stateLoadTournamentHook() {  }
      function stateConfigureTournamentHook() {
-       //tournament = tournamentLoader.getSelectedTournamentType();
        theApp.setTournament(tournamentLoader.getSelectedTournamentType());
-//       canvasView = new PPCanvasView(tournament);
-//       var canvas = $("myCanvas");
-//       canvasView.setCanvas(canvas);
-//       canvas.onclick = handleCanvasClick;
-//       editController = new PPEditController(tournament)
-//       Setup listeners.
-//       tournament.addSelectedMatchListener(editController);
-
        initializeData($("numberOfPlayersCombo").selectedIndex);
-       theApp.canvasView.redraw();
+       theApp.redraw();
      }
      function stateStartTournamentHook() {
           showElement($("tournamentTitle"));
