@@ -4,8 +4,6 @@
 // position: a number representing the match number in the round
 //
 function PPMatch(round, position, tournament) {
-  this.round = round;
-  this.position = position;
 
   this.selected = false;
 
@@ -13,13 +11,14 @@ function PPMatch(round, position, tournament) {
   this.player2 = new PPPlayer("");
   this.winner = null;
 
-  Object.defineProperty( this, 'tournament', {
-         writable:true,
-         configurable:true,
-         enumerable:false  // exclude from JSON
-  });
+  // exclude from JSON
+  Object.defineProperty( this, 'tournament', {writable:true,configurable:true,enumerable:false});
+  Object.defineProperty( this, 'position', {writable:true,configurable:true,enumerable:false});
+  Object.defineProperty( this, 'round', {writable:true,configurable:true,enumerable:false});
 
   this.tournament = tournament;
+  this.round = round;
+  this.position = position;
 
 }
 
@@ -99,11 +98,11 @@ PPMatch.prototype.canBePlayed = function () {
 
 
 
-PPMatch.fromObject = function(obj, tournament) {
-    var match = new PPMatch(obj.round, obj.position, tournament);
+PPMatch.fromObject = function(round, position, obj, tournament) {
+    var match = new PPMatch(round, position, tournament);
     match.selected = obj.selected;
     match.winner = obj.winner;
-    if (obj.round == 0 ) {
+    if (round == 0 ) {
       match.setPlayer1Name(obj.player1.name);
       match.setPlayer2Name(obj.player2.name);
     }

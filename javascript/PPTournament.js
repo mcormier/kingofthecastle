@@ -74,7 +74,7 @@ PPTournament.prototype.loadRoundsFromJSON = function (jsonData) {
 
   for(var i = 0; i < jsonData.length; i++ ) {
       for (var j = 0; j < jsonData[i].length; j++) {
-        this.rounds[i][j] = PPMatch.fromObject(jsonData[i][j], this);
+        this.rounds[i][j] = PPMatch.fromObject(i, j, jsonData[i][j], this);
       }
     }
 
