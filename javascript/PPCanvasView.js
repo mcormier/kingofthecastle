@@ -44,6 +44,7 @@ function PPCanvasView(tournament) {
   // A 2 sided array that stores all our x, y match data
   this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 
+  this.maxPlayerCountChanged(this.tournament.maxPlayerCount);
 }
 
 PPCanvasView.prototype.setCanvas = function(canvas) {
