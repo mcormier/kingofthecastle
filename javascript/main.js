@@ -72,8 +72,11 @@
      }
      function stateLoadTournamentHook() {  }
      function stateConfigureTournamentHook() {
-       theApp.setTournament(tournamentLoader.getSelectedTournamentType());
-       initializeData($("numberOfPlayersCombo").selectedIndex);
+       var tournament = tournamentLoader.getSelectedTournamentType();
+       var selIndex  = $("numberOfPlayersCombo").selectedIndex;
+       tournament.createBlankData(Math.pow(2,selIndex + 2));
+
+       theApp.setTournament(tournament);
        theApp.redraw();
      }
      function stateStartTournamentHook() {

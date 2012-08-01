@@ -152,7 +152,7 @@ PPCanvasView.prototype.maxPlayerCountChanged = function(maxPlayerCount) {
      case 64:
        this.setDrawingConstants(50, 10, 10,8, 10);break;
      default:
-       PPUtils.log('An error occurred reading this file.');
+       PPUtils.log('An unexpected value was passed to maxPlayerCountChanged.');
     };
 }
 
