@@ -33,13 +33,15 @@ PPTournamentLoader.prototype.getSelectedTournamentType = function () {
 
 PPTournamentLoader.prototype.process = function(data) {
   var jsonData = JSON.parse(data);
-  theApp.setTournament(new PPTennisTournament()); // TODO -- temporary  -- Tournament object type should be stored in file
-  theApp.tournament.name = jsonData.name;
-  $("tournamentNameTextField").value = theApp.tournament.name; // TODO -- this could be a bound configuration.
-  theApp.tournament.loadRoundsFromJSON(jsonData.rounds);
 
+  // reload tournament object
+  var tournament = new PPTennisTournament(); // TODO -- temporary  -- Tournament object type should be stored in file
+  tournament.name = jsonData.name;
+  $("tournamentNameTextField").value = tournament.name; // TODO -- this could be a bound configuration.
+  tournament.loadRoundsFromJSON(jsonData.rounds);
+
+  theApp.setTournament(tournament);
   stateManager.startTournament();   // TODO -- global variable
 
-  //selectMatch(theApp.tournament.getSelectedMatch()); // TODO -- global method.
   theApp.redraw();
 }
