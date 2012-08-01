@@ -6,7 +6,11 @@ function PPCribTournament(name) {
 // new method definitions in order for it to work.
 PPUtils.extend (PPCribTournament, PPTournament);
 
-PPCribTournament.typeName = function () {
+PPCribTournament.className = function () {
+ return "PPCribTournament";
+}
+
+PPCribTournament.labelName = function () {
  return "Crib";
 }
 
