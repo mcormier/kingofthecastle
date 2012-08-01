@@ -52,21 +52,22 @@
         PPUtils.bind("change", "fileLoader", handleFileSelect);
         // TODO -- fix
         //PPUtils.bindTextField("keyup", "tournamentNameTextField", tournament, "titleChanged");
+
+         tournamentLoader.generateRadioList("tournamentTypeList");
       };
 
-     var theApp = new PPApplication();
-
      // Global variables.
+     var theApp = new PPApplication();
      var tournamentLoader = new PPTournamentLoader();
      var fileManager = new PPFileManager(tournamentLoader);
      var stateManager = new PPStateManager();
 
 
      //  Register tournament types
-     tournamentLoader.registerTournamentTypes( [PPCribTournament, PPTennisTournament] );
+     tournamentLoader.registerTournamentTypes( [PPTennisTournament, PPCribTournament] );
 
      // BEGIN StateManager Hook functions -----------------------------------------------------------
-     function stateBeginHook() {  }
+     function stateBeginHook() { }
      function stateChooseTournamentHook() {
      }
      function stateLoadTournamentHook() {  }

@@ -80,15 +80,7 @@
 
     <div id="chooseTournamentType">
         Choose Tournament Type: <BR>
-        <blah id="tournamentTypeList">
-        <script type="text/javascript">
-            console.log("TODO -- push this radio button logic into the tournament loader.  Use constant for radio button name..");
-            for( var i = 0; i < tournamentLoader.tournamentTypes.length; i ++ ) {
-              var typeName = tournamentLoader.tournamentTypes[i].labelName();
-              document.write( typeName + "<input id='tTypeRadio" + i + "' name='tType' type='radio' value='" + typeName + "'>" + "<BR>");
-            }
-        </script>
-        </blah>
+        <blah id="tournamentTypeList"></blah>
         <input type="submit" value="back" onclick="stateManager.back();"/>
         <input type="submit" value="configure" onclick="stateManager.configureTournament();"/>
     </div>
