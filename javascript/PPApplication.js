@@ -11,6 +11,11 @@ PPApplication.prototype.setTournament = function ( tObj ) {
   this.tournament.addSelectedMatchListener(this.editController);
 }
 
+PPApplication.prototype.titleChanged = function (id, evt) {
+    this.tournament.titleChanged(id,evt);
+}
+
+
 PPApplication.prototype.redraw = function () {
   this.canvasView.redraw();
 }

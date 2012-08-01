@@ -50,9 +50,7 @@
       window.onload = function() {
 
         PPUtils.bind("change", "fileLoader", handleFileSelect);
-        // TODO -- fix
-        //PPUtils.bindTextField("keyup", "tournamentNameTextField", tournament, "titleChanged");
-
+        PPUtils.bindTextField("keyup", "tournamentNameTextField", theApp, "titleChanged");
          tournamentLoader.generateRadioList("tournamentTypeList");
       };
 
