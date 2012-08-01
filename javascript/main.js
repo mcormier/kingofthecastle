@@ -5,7 +5,7 @@
      // HTML 5 <a> download attribute
      // HTML 5 FileReader
 
-     // TODO -- support the concept of a pass
+     // TODO -- support the concept of a pass/bye
      // TODO -- WeeWeekly tournament with a consolation round.
      // TODO -- save score and track a withdrawal
      // TODO -- link suggested download name to title
@@ -59,10 +59,7 @@
      // Global variables.
      var tournamentLoader = new PPTournamentLoader();
      var fileManager = new PPFileManager(tournamentLoader);
-     //var tournament;
-     //var canvasView;
      var stateManager = new PPStateManager();
-     //var editController;
 
 
      //  Register tournament types
