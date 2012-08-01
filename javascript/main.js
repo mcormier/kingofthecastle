@@ -27,18 +27,18 @@
        var selIndex = combo.selectedIndex;
 
        initializeData(selIndex);
-       canvasView.redraw();
+       theApp.canvasView.redraw();
      }
 
      function initializeData(selIndex) {
        // Player number = 2 to the power of (selIndex + 2)
        // (0,1,2,3,4) ==> (4,8,16,32,64)
-       tournament.createBlankData(Math.pow(2,selIndex + 2));
+       theApp.tournament.createBlankData(Math.pow(2,selIndex + 2));
      }
 
 
      function handleCanvasClick(e) {
-       canvasView.handleClick(e);
+       theApp.canvasView.handleClick(e);
        return false;
      }
 
@@ -50,44 +50,48 @@
       window.onload = function() {
 
         PPUtils.bind("change", "fileLoader", handleFileSelect);
-        PPUtils.bindTextField("keyup", "tournamentNameTextField", tournament, "titleChanged");
+        // TODO -- fix
+        //PPUtils.bindTextField("keyup", "tournamentNameTextField", tournament, "titleChanged");
       };
+
+     var theApp = new PPApplication();
 
      // Global variables.
      var tournamentLoader = new PPTournamentLoader();
      var fileManager = new PPFileManager(tournamentLoader);
-     var tournament;
-     var canvasView;
+     //var tournament;
+     //var canvasView;
      var stateManager = new PPStateManager();
-     var editController;
+     //var editController;
 
 
      //  Register tournament types
      tournamentLoader.registerTournamentTypes( [PPCribTournament, PPTennisTournament] );
 
      // BEGIN StateManager Hook functions -----------------------------------------------------------
-     function stateBeginHook() { /* TODO -- never called */ }
+     function stateBeginHook() {  }
      function stateChooseTournamentHook() {
      }
      function stateLoadTournamentHook() {  }
      function stateConfigureTournamentHook() {
-       tournament = tournamentLoader.getSelectedTournamentType();
-       canvasView = new PPCanvasView(tournament);
-       var canvas = $("myCanvas");
-       canvasView.setCanvas(canvas);
-       canvas.onclick = handleCanvasClick;
-       editController = new PPEditController(tournament)
-       // Setup listeners.
-       tournament.addSelectedMatchListener(editController);
+       //tournament = tournamentLoader.getSelectedTournamentType();
+       theApp.setTournament(tournamentLoader.getSelectedTournamentType());
+//       canvasView = new PPCanvasView(tournament);
+//       var canvas = $("myCanvas");
+//       canvasView.setCanvas(canvas);
+//       canvas.onclick = handleCanvasClick;
+//       editController = new PPEditController(tournament)
+//       Setup listeners.
+//       tournament.addSelectedMatchListener(editController);
 
        initializeData($("numberOfPlayersCombo").selectedIndex);
-       canvasView.redraw();
+       theApp.canvasView.redraw();
      }
      function stateStartTournamentHook() {
           showElement($("tournamentTitle"));
 
-          editController.disablePlayerTextFields(true);
-          editController.disableWinnerRadioButtons(true);
+          theApp.editController.disablePlayerTextFields(true);
+          theApp.editController.disableWinnerRadioButtons(true);
      }
      // END StateManager Hook functions -----------------------------------------------------------
 
