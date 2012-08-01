@@ -14,8 +14,9 @@ function PPMatch(round, position, tournament) {
   this.winner = null;
 
   Object.defineProperty( this, 'tournament', {
-         get: function() { return this.parent; },
-         set: function(newValue) {  this.parent = newValue; },
+         //get: function() { return this.parent; },
+         //set: function(newValue) {  this.parent = newValue; },
+         writable:true,
          configurable:true,
          enumerable:false  // exclude from JSON
   });

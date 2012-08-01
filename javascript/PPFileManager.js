@@ -19,9 +19,6 @@ PPFileManager.createFile = function (a) {
   // TODO -- does not belong here...
   var filename = $("saveFileName").value;
 
-
-  // TODO -- causes cyclic object value error
-
   // Escape encodes % but does not encode * @ etc
   // TODO test with those characters...
   var data = escape(JSON.stringify(theApp.tournament));
