@@ -1,5 +1,8 @@
 "use strict";
 
+// This file was created by executing:
+// cat PPUtils.js PPCanvasView.js PPPlayer.js PPPoint.js PPTournament.js PPTennisTournament.js PPMatch.js > demo.js
+
 function $(id){ return document.getElementById(id); }
 
 function showElement( e ) { e.style.visibility = "visible"; }

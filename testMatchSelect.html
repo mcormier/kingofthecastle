@@ -15,6 +15,11 @@
 
  <script type="text/javascript" src="javascript/demo.js"></script>
  <script type="text/javascript">
+     function handleCanvasClick(e) {
+       canvasView.handleClick(e);
+       return false;
+     }
+
      function initializeData(selIndex) {
        // Player number = 2 to the power of (selIndex + 2)
        // (0,1,2,3,4) ==> (4,8,16,32,64)
@@ -32,6 +37,7 @@
 
        initializeData($("numberOfPlayersCombo").selectedIndex);
        var canvas = $("myCanvas");
+       canvas.onclick = handleCanvasClick;
        canvasView.setCanvas(canvas);
        canvasView.redraw()
      };
@@ -57,7 +63,8 @@
 
 
     <div id="configureTournament">
-        <p>Demo of displaying a tournament tree using an HTML canvas.</p>
+        <p>By listening for OnClick messages on the canvas we can make a match selectable.
+           Click on a box and it will be highlighted in red.</p>
 
         How many players will be in the tournament?<br>
         <select id="numberOfPlayersCombo" name="playerNumber" onChange="handlePlayerNumberCombo(this)">
