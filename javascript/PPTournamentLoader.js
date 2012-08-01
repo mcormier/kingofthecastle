@@ -34,8 +34,9 @@ PPTournamentLoader.prototype.getSelectedTournamentType = function () {
 PPTournamentLoader.prototype.process = function(data) {
   var jsonData = JSON.parse(data);
 
-  // reload tournament object
-  var tournament = new PPTennisTournament(); // TODO -- temporary  -- Tournament object type should be stored in file
+  // Convert string to statement:
+  // PPTennisTournament ==> new PPTennisTournament();
+  var tournament = eval("new " + jsonData.class +"();");
   tournament.name = jsonData.name;
   $("tournamentNameTextField").value = tournament.name; // TODO -- this could be a bound configuration.
   tournament.loadRoundsFromJSON(jsonData.rounds);
