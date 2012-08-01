@@ -1,6 +1,7 @@
 
 function PPEditController(tournament) {
   this.tournament = tournament;
+  this.selectMatch(this.tournament.getSelectedMatch());
 }
 
 PPEditController.prototype.setMatchWinner = function() {
