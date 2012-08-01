@@ -30,6 +30,10 @@
        theApp.redraw();
      }
 
+     function isDoubles() {
+       console.log("TODO -- support doubles");
+     }
+
      function initializeData(selIndex) {
        // Player number = 2 to the power of (selIndex + 2)
        // (0,1,2,3,4) ==> (4,8,16,32,64)
