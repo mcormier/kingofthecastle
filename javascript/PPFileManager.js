@@ -20,12 +20,11 @@ PPFileManager.createFile = function (a) {
   var filename = $("saveFileName").value;
 
 
-  // TODO -- causes cyclic object value error in firefox
+  // TODO -- causes cyclic object value error
 
   // Escape encodes % but does not encode * @ etc
   // TODO test with those characters...
-  //var data = escape(JSON.stringify(tournament));
-  var data = "yadda,yadda";
+  var data = escape(JSON.stringify(theApp.tournament));
 
   a.href = "data:application/json;charset=utf-8," + data;
   a.download = filename;
