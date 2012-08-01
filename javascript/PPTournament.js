@@ -18,7 +18,7 @@ function PPTournament(name) {
   });
 
  Object.defineProperty( this, 'maxPlayerCount', {
-       get: function() { return maxCount; },
+       get: function() { return this.maxCount; },
        set: function(newValue) {  this.maxCount = newValue;
                                   for (var i = 0 ; i < this.playerCountListeners.length; i++) {
                                     var obj = this.playerCountListeners[i];
