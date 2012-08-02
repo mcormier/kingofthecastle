@@ -7,9 +7,7 @@ function PPMatch(round, position, tournament) {
 
   this.selected = false;
 
-  this.player1 = new PPPlayer("");
-  this.player2 = new PPPlayer("");
-  this.winner = null;
+   this.winner = null;
 
   // exclude from JSON
   Object.defineProperty( this, 'tournament', {writable:true,configurable:true,enumerable:false});
@@ -19,6 +17,12 @@ function PPMatch(round, position, tournament) {
   this.tournament = tournament;
   this.round = round;
   this.position = position;
+
+   // All player data is stored at the first round.
+  if (this.round == 0 ) {
+    this.player1 = new PPPlayer("");
+    this.player2 = new PPPlayer("");
+  }
 
 }
 
@@ -53,6 +57,9 @@ PPMatch.prototype.getWinnerName = function () {
 }
 
 PPMatch.prototype.setPlayer1Name = function(name) {
+  if (this.round > 0 ) {
+    throw new Error("setPlayerName not supported on other rounds yet");
+  }
   this.player1.name = name;
 }
 
@@ -71,6 +78,9 @@ PPMatch.prototype.getPlayer1Name = function () {
 }
 
 PPMatch.prototype.setPlayer2Name = function(name) {
+  if (this.round > 0 ) {
+         throw new Error("setPlayerName not supported on other rounds yet");
+  }
   this.player2.name = name;
 }
 
