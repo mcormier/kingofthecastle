@@ -19,17 +19,16 @@
  <script type="text/javascript" src="javascript/PPTennisTournament.js"></script>
 
  <script type="text/javascript" src="javascript/PPMatch.js"></script>
+ <script type="text/javascript" src="javascript/PPAjaxRequest.js"></script>
 
 <script>
-  function handleStateChange() {
-    if( xmlHttp.readyState == XMLHttpRequest.DONE ) {
-      if( xmlHttp.status == 200) {
-        jsonData = xmlHttp.responseText;
-        tournamentLoader.process(jsonData);
-      } else {
-        console.log("Error loading file");
-      }
-    }
+  function successAjaxLoad(xmlHttp) {
+    tournamentLoader.process(xmlHttp.responseText);
+  }
+
+  function errorAjaxLoad(xmlHttp) {
+    console.log("An error occurred loading file with AJAX");
+    console.log(xmlHttp.status + " " + xmlHttp.statusText);
   }
 
   function handleCanvasClick(e) {
@@ -39,9 +38,7 @@
 
 
   window.onload = function() {
-    xmlHttp.open("GET", "/data/menWimbledon2012.json", true);
-    xmlHttp.onreadystatechange=handleStateChange;
-    xmlHttp.send(null);
+    ajaxRequest.getResource("/data/menWimbledon2d012.json");
   };
 
   // Global variables.
@@ -50,11 +47,7 @@
   var fileManager = new PPFileManager(tournamentLoader);
   var stateManager = new PPStateManager();
 
-  // TODO -- push this into a PPAjax object.
-  // That supports old Microsoft browsers.
-  // http://en.wikipedia.org/wiki/XMLHttpRequest
-  var xmlHttp = new XMLHttpRequest();
-  var jsonData;
+  var ajaxRequest = new PPAjaxRequest(successAjaxLoad, errorAjaxLoad);
 
   //  Register tournament types
   tournamentLoader.registerTournamentTypes( [PPTennisTournament, PPCribTournament] );
@@ -63,9 +56,6 @@
   function stateBeginHook() { }
   function stateStartTournamentHook() {
     showElement($("tournamentTitle"));
-
-    theApp.editController.disablePlayerTextFields(true);
-    theApp.editController.disableWinnerRadioButtons(true);
   }
   // END StateManager Hook functions -----------------------------------------------------------
 
@@ -79,9 +69,6 @@
 </script>
 
 </head>
-
-
-
 
 
 
