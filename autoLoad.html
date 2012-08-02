@@ -1,0 +1,144 @@
+<html lang="en">
+<head>
+	<title>Players Draw</title>
+	<link rel="stylesheet" href="style.css"/>
+
+
+ <script type="text/javascript" src="javascript/PPUtils.js"></script>
+ <script type="text/javascript" src="javascript/PPApplication.js"></script>
+ <script type="text/javascript" src="javascript/PPCanvasView.js"></script>
+ <script type="text/javascript" src="javascript/PPEditController.js"></script>
+ <script type="text/javascript" src="javascript/PPStateManager.js"></script>
+ <script type="text/javascript" src="javascript/PPTournamentLoader.js"></script>
+ <script type="text/javascript" src="javascript/PPFileManager.js"></script>
+ <script type="text/javascript" src="javascript/PPPlayer.js"></script>
+ <script type="text/javascript" src="javascript/PPPoint.js"></script>
+
+ <script type="text/javascript" src="javascript/PPTournament.js"></script>
+ <script type="text/javascript" src="javascript/PPCribTournament.js"></script>
+ <script type="text/javascript" src="javascript/PPTennisTournament.js"></script>
+
+ <script type="text/javascript" src="javascript/PPMatch.js"></script>
+
+<script>
+  function handleStateChange() {
+    if( xmlHttp.readyState == XMLHttpRequest.DONE ) {
+      if( xmlHttp.status == 200) {
+        jsonData = xmlHttp.responseText;
+        tournamentLoader.process(jsonData);
+      } else {
+        console.log("Error loading file");
+      }
+    }
+  }
+
+  function handleCanvasClick(e) {
+    theApp.canvasView.handleClick(e);
+    return false;
+  }
+
+
+  window.onload = function() {
+    xmlHttp.open("GET", "/data/menWimbledon2012.json", true);
+    xmlHttp.onreadystatechange=handleStateChange;
+    xmlHttp.send(null);
+  };
+
+  // Global variables.
+  var theApp = new PPApplication();
+  var tournamentLoader = new PPTournamentLoader();
+  var fileManager = new PPFileManager(tournamentLoader);
+  var stateManager = new PPStateManager();
+
+  // TODO -- push this into a PPAjax object.
+  // That supports old Microsoft browsers.
+  // http://en.wikipedia.org/wiki/XMLHttpRequest
+  var xmlHttp = new XMLHttpRequest();
+  var jsonData;
+
+  //  Register tournament types
+  tournamentLoader.registerTournamentTypes( [PPTennisTournament, PPCribTournament] );
+
+  // BEGIN StateManager Hook functions -----------------------------------------------------------
+  function stateBeginHook() { }
+  function stateLoadTournamentHook() {  }
+  function stateStartTournamentHook() {
+    showElement($("tournamentTitle"));
+
+    theApp.editController.disablePlayerTextFields(true);
+    theApp.editController.disableWinnerRadioButtons(true);
+  }
+  // END StateManager Hook functions -----------------------------------------------------------
+
+
+  stateManager.linkDivsAndHooksToStates(
+  ["begin",  "matchEditor", "loadTournament"],
+  [stateBeginHook, stateStartTournamentHook, stateLoadTournamentHook],
+  [PPState.START,  PPState.START_TOURNAMENT, PPState.LOAD_TOURNAMENT] );
+
+
+</script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+<div id="tournamentTitle">
+
+    <center><input id="tournamentNameTextField" type="text" size="50" placeholder="Tournament Name" value=""></center>
+</div>
+
+
+
+<div id="leftColumn">
+
+    <div id="begin">
+        <input type="submit" value="Load Tournament" onclick="stateManager.loadTournament();"/>
+    </div>
+
+    <div id="loadTournament">
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input id="fileLoader" type="file" >
+    </div>
+
+    <div id="matchEditor">
+        <table>
+            <thead>
+                    <tr><td>Player</td><td>Winner</td></tr>
+            </thead>
+            <tr>
+                <td><input id="player1TextField" type="text" size="25" value="" onkeyup="theApp.editController.updatePlayer1(this.id);"></td>
+                <td><input id="player1WinnerRadio" type="radio" name="winner" value="player1" onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+            <tr>
+                <td><input id="player2TextField" type="text" size="25" value="" onkeyup="theApp.editController.updatePlayer2(this.id);"></td>
+                <td><input id="player2WinnerRadio" type="radio" name="winner" value="player2" onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+        </table>
+         <BR><BR>
+
+
+        <input id="saveFileName"
+               type="text" value="tournament.json" placeholder="filename.txt">
+
+        <a href="data:application/json;charset=utf-8, blah blah blah"
+           download="output.json"
+           target="_blank"
+           onclick="PPFileManager.createFile(this);"
+           id="saveData">Download</a>
+
+    </div>
+
+</div>
+
+<canvas id="myCanvas" width="800" height="600" ></canvas>
+
+</body>
+
+
+</html>
