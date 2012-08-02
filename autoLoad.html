@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+	<title>Players Draw</title>
+	<link rel="stylesheet" href="style.css"/>
+
+
+ <script type="text/javascript" src="javascript/demo2.js"></script>
+
+<script>
+  function successAjaxLoad(xmlHttp) {
+    tournamentLoader.process(xmlHttp.responseText);
+  }
+
+  function errorAjaxLoad(xmlHttp) {
+    console.log("An error occurred loading file with AJAX");
+    console.log(xmlHttp.status + " " + xmlHttp.statusText);
+  }
+
+  function handleCanvasClick(e) {
+    theApp.canvasView.handleClick(e);
+    return false;
+  }
+
+
+  window.onload = function() {
+    ajaxRequest.getResource("/data/menWimbledon2012.json");
+  };
+
+  // Global variables.
+  var theApp = new PPApplication();
+  var tournamentLoader = new PPTournamentLoader();
+  var fileManager = new PPFileManager(tournamentLoader);
+  var stateManager = new PPStateManager();
+
+  var ajaxRequest = new PPAjaxRequest(successAjaxLoad, errorAjaxLoad);
+
+  //  Register tournament types
+  tournamentLoader.registerTournamentTypes( [PPTennisTournament, PPCribTournament] );
+
+  // BEGIN StateManager Hook functions -----------------------------------------------------------
+  function stateBeginHook() { }
+  function stateStartTournamentHook() {
+    showElement($("tournamentTitle"));
+  }
+  // END StateManager Hook functions -----------------------------------------------------------
+
+
+  stateManager.linkDivsAndHooksToStates(
+  ["begin",  "matchEditor"],
+  [stateBeginHook, stateStartTournamentHook],
+  [PPState.START,  PPState.START_TOURNAMENT] );
+
+
+</script>
+
+</head>
+
+
+
+<body>
+
+<div id="tournamentTitle">
+
+    <center><input id="tournamentNameTextField" type="text" size="50"
+                   tabindex="5" placeholder="Tournament Name" value=""></center>
+</div>
+
+
+
+<div id="leftColumn">
+
+    <div id="begin"/>
+
+
+    <div id="matchEditor">
+        <p>In this example a <a href="/data/menWimbledon2012.json">datafile</a>
+           is loaded with AJAX.  Some editor fields are linked to the selected match.</p>
+
+        <table>
+            <thead>
+                    <tr><td>Player</td><td>Winner</td></tr>
+            </thead>
+            <tr>
+                <td><input id="player1TextField" type="text" size="25" value=""
+                           onkeyup="theApp.editController.updatePlayer1(this.id);"
+                           tabindex="1"></td>
+                <td><input id="player1WinnerRadio" tabindex="3" type="radio" name="winner" value="player1"
+                           onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+            <tr>
+                <td><input id="player2TextField" type="text" size="25" value=""
+                           onkeyup="theApp.editController.updatePlayer2(this.id);"
+                           tabindex="2"></td>
+                <td><input id="player2WinnerRadio" tabindex="4"
+                           type="radio" name="winner" value="player2"
+                           onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+        </table>
+         <BR><BR>
+
+      <input id="saveFileName"
+             type="text" value="tournament.json" placeholder="filename.txt">
+
+      <a href="data:application/json;charset=utf-8, blah blah blah"
+         download="output.json"
+         target="_blank"
+         onclick="PPFileManager.createFile(this);"
+         id="saveData">Download</a>
+      <br><BR><a href="index.html">Back</a>
+    </div>
+
+</div>
+
+<canvas id="myCanvas" width="800" height="600" ></canvas>
+
+</body>
+
+
+</html>
