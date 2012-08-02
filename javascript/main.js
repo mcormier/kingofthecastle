@@ -9,10 +9,8 @@
      // TODO -- WeeWeekly tournament with a consolation round.
      // TODO -- save score and track a withdrawal
      // TODO -- link suggested download name to title
-     // TODO -- fix tab order when inputting player names
      // TODO -- support doubles matches
      // TODO -- reexamine drawing code.  I.E. calling begin path to clear is questionable.
-     // TODO -- round and position of a match do not need to be saved, can be derived.
 
       // 2 rounds = 4 players
       // 3 rounds = 8 players
