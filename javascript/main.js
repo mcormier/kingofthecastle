@@ -14,7 +14,8 @@
      // TODO -- reexamine drawing code.  I.E. calling begin path to clear is questionable.
      // TODO -- round and position of a match do not need to be saved, can be derived.
 
-     // TODO -- remove the constraint that a player can only be edited at the first round level. This is annoying to a user and not helpful.  UI should not reflect the underlying datamodel.
+     // TODO -- remove the constraint that a player can only be edited at the first round level.
+     // This is annoying to a user and not helpful.  UI should not reflect the underlying datamodel.
 
       // 2 rounds = 4 players
       // 3 rounds = 8 players
