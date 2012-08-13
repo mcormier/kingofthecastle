@@ -55,7 +55,7 @@
       };
 
      // Global variables.
-     var theApp = new PPApplication();
+     var theApp = new PPApplication("tournamentCanvas");
      var tournamentLoader = new PPTournamentLoader();
      var fileManager = new PPFileManager(tournamentLoader);
      var stateManager = new PPStateManager();

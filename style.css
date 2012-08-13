@@ -3,7 +3,7 @@
 	canvas{position:absolute; width: 800px; height:600px; border-style:solid; border-width:2px;}
 
   #tournamentTitle{left:20px; width:800px;margin-top:5px; margin-left:380px; visibility:hidden;}
-  #mycanvas{ top:40px; left:340px;}
+  #tournamentCanvas{ top:40px; left:340px;}
   #leftColumn { position:relative; top: 10px; left: 20px; width 300px; }
   #matchEditor,  #configureTournament, #loadTournament, #ChooseTournamentType   { visibility:hidden;}
   #begin {  padding-top:50px;}
