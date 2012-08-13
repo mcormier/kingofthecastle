@@ -36,13 +36,6 @@
        theApp.tournament.createBlankData(Math.pow(2,selIndex + 2));
      }
 
-
-     function handleCanvasClick(e) {
-       theApp.canvasView.handleClick(e);
-       return false;
-     }
-
-
      function handleFileSelect(evt) {
        fileManager.handleFileSelect(evt);
      }

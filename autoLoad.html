@@ -31,12 +31,6 @@
     console.log(xmlHttp.status + " " + xmlHttp.statusText);
   }
 
-  function handleCanvasClick(e) {
-    theApp.canvasView.handleClick(e);
-    return false;
-  }
-
-
   window.onload = function() {
     ajaxRequest.getResource("/data/menWimbledon2012.json");
   };
