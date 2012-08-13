@@ -44,7 +44,11 @@ function PPCanvasView(tournament) {
   // A 2 sided array that stores all our x, y match data
   this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 
-  this.maxPlayerCountChanged(this.tournament.maxPlayerCount);
+  var maxPlayerCount = this.tournament.maxPlayerCount;
+  if (maxPlayerCount) {
+    this.maxPlayerCountChanged(this.tournament.maxPlayerCount);
+  }
+
 }
 
 PPCanvasView.prototype.setCanvas = function(canvas) {
@@ -152,7 +156,7 @@ PPCanvasView.prototype.maxPlayerCountChanged = function(maxPlayerCount) {
      case 64:
        this.setDrawingConstants(50, 10, 10,8, 10);break;
      default:
-       PPUtils.log('An unexpected value was passed to maxPlayerCountChanged.');
+       PPUtils.log('An unexpected value was passed to maxPlayerCountChanged: ' + maxPlayerCount);
     };
 }
 

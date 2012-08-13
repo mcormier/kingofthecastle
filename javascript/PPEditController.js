@@ -8,8 +8,7 @@ PPEditController.prototype.setMatchWinner = function() {
   var selectedMatch = this.tournament.getSelectedMatch();
 
   if (selectedMatch == null ) {
-    PPUtils.log("Unexpected state");
-    return;
+    throw new Error("Unexpected state");
   }
 
        // TODO -- Use object method
