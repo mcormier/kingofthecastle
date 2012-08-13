@@ -14,7 +14,6 @@ PPApplication.prototype.setTournament = function ( tObj ) {
     self.canvasView.handleClick(e);
   }
 
-
   this.editController = new PPEditController(this.tournament)
   // Setup listeners.
   this.tournament.addSelectedMatchListener(this.editController);

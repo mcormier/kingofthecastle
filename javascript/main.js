@@ -44,7 +44,7 @@
 
         PPUtils.bind("change", "fileLoader", handleFileSelect);
         PPUtils.bindTextField("keyup", "tournamentNameTextField", theApp, "titleChanged");
-         tournamentLoader.generateRadioList("tournamentTypeList");
+        tournamentLoader.generateRadioList("tournamentTypeList");
       };
 
      // Global variables.
