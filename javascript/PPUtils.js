@@ -28,8 +28,8 @@ PPUtils.objectImplementsMethod = function ( obj, method ) {
 PPUtils.extend = function (ChildClass, ParentClass) {
     var parent = new ParentClass();
     ChildClass.prototype = parent;
-    ChildClass.prototype.constructor = ChildClass;
     ChildClass.prototype.superclass = parent.constructor;
+    ChildClass.prototype.constructor = ChildClass;
 }
 
 
