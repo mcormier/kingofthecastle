@@ -31,12 +31,9 @@
     console.log(xmlHttp.status + " " + xmlHttp.statusText);
   }
 
-  window.onload = function() {
-    ajaxRequest.getResource("/data/menWimbledon2012.json");
-  };
 
   // Global variables.
-  var theApp = new PPApplication("tournamentCanvas", new PPEditController() );
+  var theApp = new PPApplication("tournamentCanvas", new PPEditController(), new PPCanvasView() );
 
   var tournamentLoader = new PPTournamentLoader();
   var fileManager = new PPFileManager(tournamentLoader);
@@ -59,6 +56,9 @@
   ["begin",  "matchEditor"],
   [stateBeginHook, stateStartTournamentHook],
   [PPState.START,  PPState.START_TOURNAMENT] );
+
+  theApp.listenForOnLoad();
+  ajaxRequest.getResourceOnLoad("/data/menWimbledon2012.json");
 
 
 </script>
