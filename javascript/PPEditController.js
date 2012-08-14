@@ -1,11 +1,15 @@
 
 function PPEditController(tournament) {
-  this.setTournament(tournament);
+   if (tournament != null ) {
+     this.setTournament(tournament);
+   }
 }
 
 PPEditController.prototype.setTournament = function(tournament) {
   this.tournament = tournament;
   this.selectMatch(this.tournament.getSelectedMatch());
+
+  this.tournament.addSelectedMatchListener(this);
 }
 
 PPEditController.prototype.setMatchWinner = function() {
