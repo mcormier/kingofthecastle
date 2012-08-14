@@ -40,3 +40,8 @@ PPAjaxRequest.prototype.getResource = function(resourceName) {
     this.xmlHttp.open("GET",resourceName, true);
     this.xmlHttp.send(null);
 }
+
+PPAjaxRequest.prototype.getResourceOnLoad = function(resourceName) {
+   var self = this;
+   window.addEventListener("load", function () {self.getResource(resourceName);} , false);
+}
