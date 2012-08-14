@@ -38,17 +38,15 @@
        canvasView.redraw();
      }
 
-     window.onload = function() {
-
+     function init() {
        initializeData($("numberOfPlayersCombo").selectedIndex);
-       var canvas = $("myCanvas");
-       canvasView.setCanvas(canvas);
        canvasView.redraw()
-     };
+     }
 
      var tournament = new PPTennisTournament();
-     var canvasView = new PPCanvasView(tournament);
+     var canvasView = new PPCanvasView("myCanvas", tournament);
 
+     PPUtils.bind("load", window, init);
 
  </script>
 
