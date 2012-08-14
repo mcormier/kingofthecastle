@@ -38,16 +38,24 @@ PPCanvasViewMatch.prototype.pointSelectsMatch = function(point) {
 //----------------------------------------------------------------------------------------------------
 
 function PPCanvasView(tournament) {
-  this.tournament = tournament;
-  this.tournament.addPlayerCountListener(this);
-
   // A 2 sided array that stores all our x, y match data
   this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 
-  var maxPlayerCount = this.tournament.maxPlayerCount;
-  if (maxPlayerCount) {
-    this.maxPlayerCountChanged(this.tournament.maxPlayerCount);
-  }
+  this.setTournament(tournament);
+}
+
+PPCanvasView.prototype.setTournament = function (tournament) {
+   this.tournament = tournament;
+
+   if (this.tournament == null) {
+     return;
+   }
+
+   this.tournament.addPlayerCountListener(this);
+   var maxPlayerCount = this.tournament.maxPlayerCount;
+     if (maxPlayerCount) {
+       this.maxPlayerCountChanged(this.tournament.maxPlayerCount);
+     }
 
 }
 
@@ -196,6 +204,7 @@ PPCanvasView.prototype.setDrawingConstants = function (matchWidth, matchHeight, 
        this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 }
 
+// TODO -- why use static class variables?
 // Static class variables
 PPCanvasView.matchWidth = 0;
 PPCanvasView.matchHeight = 0;
