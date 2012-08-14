@@ -55,11 +55,10 @@
     fileManager.handleFileSelect(evt);
     }
 
-    window.onload = function() {
-
-    PPUtils.bind("change", $("fileLoader"), handleFileSelect);
-    PPUtils.bindTextField("keyup", $("tournamentNameTextField"), theApp, "titleChanged");
-    tournamentLoader.generateRadioList("tournamentTypeList");
+    function init() {
+      PPUtils.bind("change", $("fileLoader"), handleFileSelect);
+      PPUtils.bindTextField("keyup", $("tournamentNameTextField"), theApp, "titleChanged");
+      tournamentLoader.generateRadioList("tournamentTypeList");
     };
 
     // Global variables.
@@ -98,6 +97,7 @@
     [stateBeginHook, stateChooseTournamentHook, stateConfigureTournamentHook, stateStartTournamentHook, stateLoadTournamentHook],
     [PPState.START, PPState.CHOOSE_TOURNAMENT, PPState.CONFIGURE_TOURNAMENT, PPState.START_TOURNAMENT, PPState.LOAD_TOURNAMENT] );
 
+    PPUtils.bind("load", window, init);
   </script>
 
 </head>
