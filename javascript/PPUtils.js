@@ -34,13 +34,11 @@ PPUtils.extend = function (ChildClass, ParentClass) {
 
 
 // Returns the callback so that it can be removed later
-PPUtils.bindTextField = function(event, id, boundObj, objCallback) {
+PPUtils.bindTextField = function(event, element, boundObj, objCallback) {
 
   var callback = function receive(evt) {
     boundObj[objCallback](id, evt);
   }
-
-  var element = $(id);
 
   if ( typeof element.addEventListener != "undefined" ) {
     element.addEventListener(event, callback, false);
@@ -50,8 +48,7 @@ PPUtils.bindTextField = function(event, id, boundObj, objCallback) {
 
   return callback;
 }
-PPUtils.bind = function(event, id, callback) {
-  var element = $(id);
+PPUtils.bind = function(event, element, callback) {
   if ( typeof element.addEventListener != "undefined" ) {
     element.addEventListener(event, callback, false);
   } else if ( typeof element.attachEvent != "undefined" ) { // Supports IE < 9
