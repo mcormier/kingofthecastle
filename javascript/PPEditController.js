@@ -1,8 +1,6 @@
 
 function PPEditController(tournament) {
-   if (tournament != null ) {
-     this.setTournament(tournament);
-   }
+   if (tournament != null ) { this.setTournament(tournament); }
 }
 
 PPEditController.prototype.setTournament = function(tournament) {
