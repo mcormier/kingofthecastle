@@ -1,15 +1,22 @@
-function PPApplication(canvasName) {
+function PPApplication(canvasName, editor) {
   this.canvasName = canvasName;
+
+  if (editor != null ) {
+    this.setEditController(editor);
+  }
 }
 
 PPApplication.prototype.setEditController = function (controller) {
   this.editController = controller;
-  this.editController.setTournament(this.tournament);
+
+  if(this.tournament != null ) {
+    this.editController.setTournament(this.tournament);
+  }
 }
 
-PPApplication.prototype.setTournament = function ( tObj ) {
-  this.tournament = tObj;
-  this.canvasView = new PPCanvasView(this.tournament);
+PPApplication.prototype.setCanvasView = function (view) {
+  this.canvasView = view;
+
   var canvas = $(this.canvasName);
   var self = this;
 
@@ -19,7 +26,17 @@ PPApplication.prototype.setTournament = function ( tObj ) {
     self.canvasView.handleClick(e);
   }
 
-  this.setEditController(new PPEditController());
+}
+
+PPApplication.prototype.setTournament = function ( tObj ) {
+  this.tournament = tObj;
+
+  this.setCanvasView( new PPCanvasView(this.tournament) );
+
+  if (this.editController != null ) {
+    this.editController.setTournament(this.tournament);
+  }
+
 }
 
 PPApplication.prototype.titleChanged = function (id, evt) {
