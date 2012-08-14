@@ -28,8 +28,8 @@ PPUtils.objectImplementsMethod = function ( obj, method ) {
 PPUtils.extend = function (ChildClass, ParentClass) {
     var parent = new ParentClass();
     ChildClass.prototype = parent;
-    ChildClass.prototype.super = parent.constructor;
     ChildClass.prototype.constructor = ChildClass;
+    ChildClass.prototype.superclass = parent.constructor;
 }
 
 
@@ -40,12 +40,21 @@ PPUtils.bindTextField = function(event, id, boundObj, objCallback) {
     boundObj[objCallback](id, evt);
   }
 
-  $(id).addEventListener(event, callback, false);
+  var element = $(id);
+
+  if ( typeof element.addEventListener != "undefined" ) {
+    element.addEventListener(event, callback, false);
+  } else if ( typeof element.attachEvent != "undefined" ) { // Supports IE < 9
+    element.attachEvent(event, callback);
+  }
 
   return callback;
 }
 PPUtils.bind = function(event, id, callback) {
-
-  $(id).addEventListener(event, callback, false);
-
+  var element = $(id);
+  if ( typeof element.addEventListener != "undefined" ) {
+    element.addEventListener(event, callback, false);
+  } else if ( typeof element.attachEvent != "undefined" ) { // Supports IE < 9
+    element.attachEvent(event, callback);
+  }
 }

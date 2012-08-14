@@ -1,5 +1,5 @@
 function PPCribTournament(name) {
-  this.super(name);
+  this.superclass(name);
 }
 
 // This must be in between the constructor definition and

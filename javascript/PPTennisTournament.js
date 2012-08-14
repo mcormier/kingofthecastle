@@ -1,5 +1,5 @@
 function PPTennisTournament(name) {
-  this.super(name);
+  this.superclass(name);
   this.class = PPTennisTournament.className();
 }
 
