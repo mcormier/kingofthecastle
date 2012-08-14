@@ -2,6 +2,11 @@ function PPApplication(canvasName) {
   this.canvasName = canvasName;
 }
 
+PPApplication.prototype.setEditController = function (controller) {
+  this.editController = controller;
+  this.editController.setTournament(this.tournament);
+}
+
 PPApplication.prototype.setTournament = function ( tObj ) {
   this.tournament = tObj;
   this.canvasView = new PPCanvasView(this.tournament);
@@ -14,9 +19,7 @@ PPApplication.prototype.setTournament = function ( tObj ) {
     self.canvasView.handleClick(e);
   }
 
-  this.editController = new PPEditController(this.tournament)
-  // Setup listeners.
-  this.tournament.addSelectedMatchListener(this.editController);
+  this.setEditController(new PPEditController());
 }
 
 PPApplication.prototype.titleChanged = function (id, evt) {
