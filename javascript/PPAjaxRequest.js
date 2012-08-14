@@ -43,5 +43,5 @@ PPAjaxRequest.prototype.getResource = function(resourceName) {
 
 PPAjaxRequest.prototype.getResourceOnLoad = function(resourceName) {
    var self = this;
-   window.addEventListener("load", function () {self.getResource(resourceName);} , false);
+   PPUtils.bind("load", window, function () {self.getResource(resourceName);} );
 }
