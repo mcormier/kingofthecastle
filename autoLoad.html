@@ -33,7 +33,7 @@
 
 
   // Global variables.
-  var theApp = new PPApplication("tournamentCanvas", new PPEditController(), new PPCanvasView() );
+  var theApp = new PPApplication(new PPEditController(), new PPCanvasView("tournamentCanvas") );
 
   var tournamentLoader = new PPTournamentLoader();
   var fileManager = new PPFileManager(tournamentLoader);
@@ -57,7 +57,6 @@
   [stateBeginHook, stateStartTournamentHook],
   [PPState.START,  PPState.START_TOURNAMENT] );
 
-  theApp.listenForOnLoad();
   ajaxRequest.getResourceOnLoad("/data/menWimbledon2012.json");
 
 

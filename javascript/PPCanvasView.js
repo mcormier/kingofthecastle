@@ -37,11 +37,36 @@ PPCanvasViewMatch.prototype.pointSelectsMatch = function(point) {
 }
 //----------------------------------------------------------------------------------------------------
 
-function PPCanvasView(tournament) {
+// The elementName is the string value of the id of the canvas element
+// the view is linked to.  The view will register for the onload event
+// and link to that element when it is available.
+function PPCanvasView(elementName, tournament) {
+  if (elementName == null ) { throw new Error("PPCanvasView missing required parameter."); }
+  this.elementName = elementName;
+
   // A 2 sided array that stores all our x, y match data
   this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 
   if (tournament != null ) { this.setTournament(tournament); }
+
+  var self = this;
+  PPUtils.bind("load", window, function () {self.onLoad();} );
+
+}
+
+PPCanvasView.prototype.onLoad = function () {
+  this.linkCanvasViewToElement();
+}
+
+PPCanvasView.prototype.linkCanvasViewToElement = function () {
+  var canvas = $(this.elementName);
+
+  this.setCanvas(canvas);
+
+  var self = this;
+  canvas.onclick = function handleClick (e) {
+    self.handleClick(e);
+  }
 }
 
 PPCanvasView.prototype.setTournament = function (tournament) {
