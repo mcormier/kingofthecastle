@@ -23,7 +23,14 @@ PPEditController.prototype.updatePlayer2 = function (id) {
   this.tournament.getSelectedMatch().setPlayer2Name(value);
 }
 
+PPEditController.prototype.getSelectedMatch = function() {
+  var selectedMatch = this.tournament.getSelectedMatch();
 
+  if (selectedMatch == null ) {
+    throw new Error("Unexpected state, no match selected.");
+  }
+  return selectedMatch;
+}
 
 PPEditController.prototype.selectMatch = function ( selectedMatch /* PPMatch */ ) {
      if ( selectedMatch == null  ) {
