@@ -8,6 +8,7 @@
  <script type="text/javascript" src="javascript/PPApplication.js"></script>
  <script type="text/javascript" src="javascript/PPCanvasView.js"></script>
  <script type="text/javascript" src="javascript/PPEditController.js"></script>
+ <script type="text/javascript" src="javascript/PPSinglesEditController.js"></script>
  <script type="text/javascript" src="javascript/PPStateManager.js"></script>
  <script type="text/javascript" src="javascript/PPTournamentLoader.js"></script>
  <script type="text/javascript" src="javascript/PPFileManager.js"></script>
@@ -31,9 +32,15 @@
     console.log(xmlHttp.status + " " + xmlHttp.statusText);
   }
 
+  function createApp() {
+    var editController = new PPSinglesEditController("player1TextField", "player2TextField",
+                                                     "player1WinnerRadio","player2WinnerRadio" );
+    var view = new PPCanvasView("tournamentCanvas");
+    return new PPApplication(editController, view );
+  }
 
   // Global variables.
-  var theApp = new PPApplication(new PPEditController(), new PPCanvasView("tournamentCanvas") );
+  var theApp = createApp();
 
   var tournamentLoader = new PPTournamentLoader();
   var fileManager = new PPFileManager(tournamentLoader);
@@ -87,16 +94,12 @@
                     <tr><td>Player</td><td>Winner</td></tr>
             </thead>
             <tr>
-                <td><input id="player1TextField" type="text" size="25" value=""
-                           onkeyup="theApp.editController.updatePlayer1(this.id);"
-                           tabindex="1"></td>
+                <td><input id="player1TextField" type="text" size="25" value="" tabindex="1"></td>
                 <td><input id="player1WinnerRadio" tabindex="3" type="radio" name="winner" value="player1"
                            onclick="theApp.editController.setMatchWinner();"></td>
             </tr>
             <tr>
-                <td><input id="player2TextField" type="text" size="25" value=""
-                           onkeyup="theApp.editController.updatePlayer2(this.id);"
-                           tabindex="2"></td>
+                <td><input id="player2TextField" type="text" size="25" value="" tabindex="2"></td>
                 <td><input id="player2WinnerRadio" tabindex="4"
                            type="radio" name="winner" value="player2"
                            onclick="theApp.editController.setMatchWinner();"></td>
