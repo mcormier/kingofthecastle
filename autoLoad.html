@@ -35,7 +35,8 @@
   }
 
   function createApp() {
-    var editController = new PPSinglesEditController("player1TextField", "player2TextField",
+    var editController = new PPSinglesEditController("tournamentNameTextField",
+                                                     "player1TextField", "player2TextField",
                                                      "player1WinnerRadio","player2WinnerRadio" );
     var view = new PPCanvasView("tournamentCanvas");
     return new PPApplication(editController, view );
@@ -43,10 +44,11 @@
 
   // Global variables.
   var theApp = createApp();
-
-  var tournamentLoader = new PPTournamentLoader();
-  var fileManager = new PPFileManager(tournamentLoader, "saveFileName", "saveData");
   var stateManager = new PPStateManager();
+
+  var tournamentLoader = new PPTournamentLoader(theApp, stateManager);
+  var fileManager = new PPFileManager(tournamentLoader, "saveFileName", "saveData");
+
 
   var ajaxRequest = new PPAjaxRequest(successAjaxLoad, errorAjaxLoad);
 
