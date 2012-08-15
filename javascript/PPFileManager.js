@@ -1,31 +1,43 @@
-
-// The delegate must not be null and must implement the process method.
 //
-function PPFileManager(delegate) {
+// All parameters are required.
+// The delegate must implement the process method.
+//
+function PPFileManager(delegate, textInputId, saveLinkId) {
+    if (delegate == null || textInputId == null || saveLinkId == null) {
+      throw new Error("PPFileManager missing required parameter.");
+    }
 
   if ( ! PPUtils.objectImplementsMethod( delegate, "process") ) {
      throw new Error("Process function is not implemented by delegate.");
   }
 
   this.delegate = delegate;
+  this.textInputId = textInputId;
+  this.saveLinkId = saveLinkId;
+
+
+   var self = this;
+   // Bind to html elements when document is loaded.
+   PPUtils.bind("load", window, function () {self.bind();} );
 }
 
+PPFileManager.prototype.bind = function () {
+   //  onclick="PPFileManager.createFile(this);"
+  var self = this;
+  PPUtils.bind("click", $(this.saveLinkId), function () {self.createFile();} );
+}
 
-
-// TODO -- make generic
-// Static class method.
-PPFileManager.createFile = function (a) {
-
-  // TODO -- does not belong here...
-  var filename = $("saveFileName").value;
+PPFileManager.prototype.createFile = function () {
+  var a = $(this.saveLinkId);
+  var filename = $(this.textInputId).value;
 
   // Escape encodes % but does not encode * @ etc
   // TODO test with those characters...
+  // TODO -- relies on global variable.
   var data = escape(JSON.stringify(theApp.tournament));
 
   a.href = "data:application/json;charset=utf-8," + data;
   a.download = filename;
-
 }
 
 
@@ -50,7 +62,7 @@ PPFileManager.errorHandler = function (evt) {
 
         break;
       case evt.target.error.ABORT_ERR:
-        break; // noop
+        break; // no op
       default:
         PPUtils.log('An error occurred reading this file. Error code = ' + evt.target.error.code);
     };
