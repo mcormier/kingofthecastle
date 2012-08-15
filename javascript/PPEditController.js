@@ -10,21 +10,7 @@ PPEditController.prototype.setTournament = function(tournament) {
   this.tournament.addSelectedMatchListener(this);
 }
 
-PPEditController.prototype.setMatchWinner = function() {
-  var selectedMatch = this.tournament.getSelectedMatch();
-
-  if (selectedMatch == null ) {
-    throw new Error("Unexpected state");
-  }
-
-       // TODO -- Use object method
-  if ( $("player1WinnerRadio").checked ) {
-    selectedMatch.winner = 1;
-  } else {
-    selectedMatch.winner = 2;
-  }
-
-}
+PPEditController.prototype.setMatchWinner = function() {throw new Error("Abstract method PPEditController.setMatchWinner"); }
 
 
 PPEditController.prototype.updatePlayer1 = function (id) {

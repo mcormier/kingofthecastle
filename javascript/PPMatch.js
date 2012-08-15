@@ -9,7 +9,7 @@ function PPMatch(round, position, tournament) {
 
   this.selected = false;
 
-   this.winner = null;
+  this.winner = null;
 
   // exclude from JSON
   Object.defineProperty( this, 'tournament', {writable:true,configurable:true,enumerable:false});
@@ -51,6 +51,10 @@ PPMatch.prototype.winnerOrdinal = function () {
   } else {
     return PPMatch.NO_WINNER;
   }
+}
+
+PPMatch.prototype.setWinner = function (value) {
+  this.winner = value;
 }
 
 PPMatch.prototype.getWinnerName = function () {

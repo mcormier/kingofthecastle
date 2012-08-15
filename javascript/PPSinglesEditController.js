@@ -26,3 +26,19 @@ PPSinglesEditController.prototype.bind = function () {
   PPUtils.bind("click", $(this.player1RadioId), function () {self.setMatchWinner();} );
   PPUtils.bind("click", $(this.player2RadioId), function () {self.setMatchWinner();} );
 }
+
+
+PPSinglesEditController.prototype.setMatchWinner = function() {
+  var selectedMatch = this.tournament.getSelectedMatch();
+
+  if (selectedMatch == null ) {
+    throw new Error("Unexpected state");
+  }
+
+  if ( $(this.player1RadioId).checked ) {
+    selectedMatch.setWinner(PPMatch.player1);
+  } else {
+    selectedMatch.setWinner(PPMatch.player2);
+  }
+
+}
