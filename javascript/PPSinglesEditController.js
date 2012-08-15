@@ -38,3 +38,47 @@ PPSinglesEditController.prototype.setMatchWinner = function() {
   }
 
 }
+
+PPSinglesEditController.prototype.disablePlayerTextFields = function (state)  {
+       $(this.player1TextId).disabled = state;
+       $(this.player2TextId).disabled = state;
+}
+
+PPSinglesEditController.prototype.disableWinnerRadioButtons = function (state) {
+       $(this.player1RadioId).disabled = state;
+       $(this.player2RadioId).disabled = state;
+       // Clear the checked state as we disable...
+       if ( state == true ) {
+         $(this.player1RadioId).checked = false;
+         $(this.player2RadioId).checked = false;
+       }
+}
+
+PPSinglesEditController.prototype.setEditorValues = function (match) {
+       if ( match == null ) {
+         $(this.player1TextId).value = "";
+         $(this.player2TextId).value = "";
+       } else {
+         $(this.player1TextId).value = match.getPlayer1Name();
+         $(this.player2TextId).value = match.getPlayer2Name();
+       }
+}
+
+PPSinglesEditController.prototype.setRadioValues = function (match) {
+       if ( match == null) {
+         return;
+       }
+
+       if (match.completed()) {
+         var winVal = match.winnerOrdinal();
+         if ( winVal == PPMatch.Player1 ) {
+            $(this.player1RadioId).checked = true;
+         }
+         if ( winVal == PPMatch.Player1 ) {
+            $(this.player2RadioId).checked = true;
+         }
+       } else {
+          $(this.player1RadioId).checked = false;
+          $(this.player2RadioId).checked = false;
+       }
+}
