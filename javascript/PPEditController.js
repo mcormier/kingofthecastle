@@ -5,9 +5,8 @@ function PPEditController(tournament) {
 
 PPEditController.prototype.setTournament = function(tournament) {
   this.tournament = tournament;
-  this.selectMatch(this.tournament.getSelectedMatch());
-
   this.tournament.addSelectedMatchListener(this);
+  this.selectMatch(this.getSelectedMatch());
 }
 
 PPEditController.prototype.setMatchWinner = function() {throw new Error("Abstract method PPEditController.setMatchWinner"); }
@@ -15,12 +14,12 @@ PPEditController.prototype.setMatchWinner = function() {throw new Error("Abstrac
 
 PPEditController.prototype.updatePlayer1 = function (id) {
   var value = $(id).value;
-  this.tournament.getSelectedMatch().setPlayer1Name(value);
+  this.getSelectedMatch().setPlayer1Name(value);
 }
 
 PPEditController.prototype.updatePlayer2 = function (id) {
   var value = $(id).value;
-  this.tournament.getSelectedMatch().setPlayer2Name(value);
+  this.getSelectedMatch().setPlayer2Name(value);
 }
 
 PPEditController.prototype.getSelectedMatch = function() {
