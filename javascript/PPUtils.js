@@ -37,7 +37,7 @@ PPUtils.extend = function (ChildClass, ParentClass) {
 PPUtils.bindTextField = function(event, element, boundObj, objCallback) {
 
   var callback = function receive(evt) {
-    boundObj[objCallback](id, evt);
+    boundObj[objCallback](element, evt);
   }
 
   if ( typeof element.addEventListener != "undefined" ) {
