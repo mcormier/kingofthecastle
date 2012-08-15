@@ -29,16 +29,12 @@ PPSinglesEditController.prototype.bind = function () {
 
 
 PPSinglesEditController.prototype.setMatchWinner = function() {
-  var selectedMatch = this.tournament.getSelectedMatch();
-
-  if (selectedMatch == null ) {
-    throw new Error("Unexpected state");
-  }
+  var selectedMatch = this.getSelectedMatch();
 
   if ( $(this.player1RadioId).checked ) {
-    selectedMatch.setWinner(PPMatch.player1);
+    selectedMatch.setWinner(PPMatch.Player1);
   } else {
-    selectedMatch.setWinner(PPMatch.player2);
+    selectedMatch.setWinner(PPMatch.Player2);
   }
 
 }
