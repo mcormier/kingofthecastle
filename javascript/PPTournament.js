@@ -91,8 +91,8 @@ PPTournament.prototype.getSelectedMatch = function () {
   return null;
 }
 
-PPTournament.prototype.titleChanged = function (id, evt) {
-    this.name = $(id).value;
+PPTournament.prototype.titleChanged = function (element, evt) {
+    this.name = element.value;
 }
 
 
