@@ -1,10 +1,12 @@
-function PPSinglesEditController(player1TextId, player2TextId, player1RadioId, player2RadioId, tournament) {
-  if (player1TextId == null || player2TextId == null || player1RadioId == null || player2RadioId == null) {
+function PPSinglesEditController(tournamentTitleTextId, player1TextId, player2TextId, player1RadioId, player2RadioId, tournament) {
+  if (tournamentTitleTextId == null || player1TextId == null || player2TextId == null
+       || player1RadioId == null || player2RadioId == null) {
     throw new Error("PPSinglesEditController missing required parameter.");
   }
 
   this.superclass(tournament);
 
+  this.tournamentTitleTextId = tournamentTitleTextId;
   this.player1TextId = player1TextId;
   this.player2TextId = player2TextId;
   this.player1RadioId = player1RadioId;
@@ -25,8 +27,13 @@ PPSinglesEditController.prototype.bind = function () {
   PPUtils.bind("keyup", $(this.player2TextId), function () {self.updatePlayer2(self.player2TextId);} );
   PPUtils.bind("click", $(this.player1RadioId), function () {self.setMatchWinner();} );
   PPUtils.bind("click", $(this.player2RadioId), function () {self.setMatchWinner();} );
+
+  PPUtils.bindTextField("keyup", $(this.tournamentTitleTextId), self, "titleChanged");
 }
 
+PPSinglesEditController.prototype.titleChanged = function (id, evt) {
+    this.tournament.titleChanged(id,evt);
+}
 
 PPSinglesEditController.prototype.setMatchWinner = function() {
   var selectedMatch = this.getSelectedMatch();
