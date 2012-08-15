@@ -1,5 +1,12 @@
 
-function PPTournamentLoader() {
+function PPTournamentLoader(theApp, stateManager) {
+   if (theApp == null || stateManager == null) {
+        throw new Error("PPTournamentLoader missing required parameter.");
+   }
+
+  this.theApp = theApp;
+  this.stateManager = stateManager;
+
   this.tournamentTypes = new Array();
 }
 
@@ -65,11 +72,13 @@ PPTournamentLoader.prototype.process = function(data) {
   // "PPTennisTournament" ==> new PPTennisTournament();
   var tournament = eval("new " + jsonData.class +"();");
   tournament.name = jsonData.name;
-  $("tournamentNameTextField").value = tournament.name; // TODO -- this could be a bound configuration.
+  // TODO -- this could be a bound configuration, push to edit controller?
+  console.log("TODO -- remove hardcoded element name.")
+  $("tournamentNameTextField").value = tournament.name;
   tournament.loadRoundsFromJSON(jsonData.rounds);
 
-  theApp.setTournament(tournament);
-  stateManager.startTournament();   // TODO -- global variable
+  this.theApp.setTournament(tournament);
+  this.stateManager.startTournament();
 
-  theApp.redraw();
+  this.theApp.redraw();
 }
