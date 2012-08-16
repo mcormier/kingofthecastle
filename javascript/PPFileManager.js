@@ -22,7 +22,6 @@ function PPFileManager(delegate, textInputId, saveLinkId) {
 }
 
 PPFileManager.prototype.bind = function () {
-   //  onclick="PPFileManager.createFile(this);"
   var self = this;
   PPUtils.bind("click", $(this.saveLinkId), function () {self.createFile();} );
 }
@@ -33,7 +32,7 @@ PPFileManager.prototype.createFile = function () {
 
   // Escape encodes % but does not encode * @ etc
   // TODO test with those characters...
-  // TODO -- relies on global variable.
+  // TODO -- relies on global variable. get from delegate.
   var data = escape(JSON.stringify(theApp.tournament));
 
   a.href = "data:application/json;charset=utf-8," + data;
@@ -77,7 +76,7 @@ PPFileManager.prototype.handleFileSelect = function (evt) {
   var reader = new FileReader();
 
   reader.onerror = PPFileManager.errorHandler;
-  reader.onprogress = function(e) { PPUtils.log('Progress!!'); };
+  reader.onprogress = function(e) { };
   reader.onabort = function(e) { PPUtils.log('File read cancelled'); };
   reader.onload = function(e) {   delegate.process(e.target.result); };
 
