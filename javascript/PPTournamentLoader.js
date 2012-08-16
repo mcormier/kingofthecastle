@@ -62,6 +62,11 @@ PPTournamentLoader.prototype.generateRadioList = function (id) {
 
 }
 
+PPTournamentLoader.prototype.getSaveData = function() {
+  return escape(JSON.stringify(this.theApp.tournament));
+}
+
+
 PPTournamentLoader.prototype.process = function(data) {
   var jsonData = JSON.parse(data);
 
