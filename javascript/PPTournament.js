@@ -47,7 +47,8 @@ function PPTournament(name) {
 }
 
 PPTournament.prototype.getName = function () {  return this.name; }
-PPTournament.prototype.setName = function (value) {  this.name = value; }
+PPTournament.prototype.setName = function (value) {
+  if (value == null ) { this.name = ""; } else this.name = value; }
 
 PPTournament.prototype.addSelectedMatchListener = function (listenerObj) {
    if ( ! PPUtils.objectImplementsMethod( listenerObj, "selectMatch") ) {
