@@ -7,7 +7,7 @@ function PPFileManager(delegate, textInputId, saveLinkId) {
       throw new Error("PPFileManager missing required parameter.");
     }
 
-  if ( ! PPUtils.objectImplementsMethod( delegate, "process") ) {
+  if ( ! PPUtils.objectImplementsMethods( delegate, ["process", "getSaveData"] ) ) {
      throw new Error("Process function is not implemented by delegate.");
   }
 
@@ -32,8 +32,7 @@ PPFileManager.prototype.createFile = function () {
 
   // Escape encodes % but does not encode * @ etc
   // TODO test with those characters...
-  // TODO -- relies on global variable. get from delegate.
-  var data = escape(JSON.stringify(theApp.tournament));
+  var data = this.delegate.getSaveData();
 
   a.href = "data:application/json;charset=utf-8," + data;
   a.download = filename;
