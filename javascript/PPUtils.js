@@ -30,6 +30,8 @@ PPUtils.extend = function (ChildClass, ParentClass) {
     ChildClass.prototype = parent;
     ChildClass.prototype.superclass = parent.constructor;
     ChildClass.prototype.constructor = ChildClass;
+    ChildClass.superclass =  ParentClass;
+    ChildClass.superproto = ParentClass.prototype;
 }
 
 
