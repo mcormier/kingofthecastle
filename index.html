@@ -7,6 +7,7 @@
  <script type="text/javascript" src="javascript/PPApplication.js"></script>
  <script type="text/javascript" src="javascript/PPCanvasView.js"></script>
  <script type="text/javascript" src="javascript/PPEditController.js"></script>
+ <script type="text/javascript" src="javascript/PPSinglesEditController.js"></script>
  <script type="text/javascript" src="javascript/PPStateManager.js"></script>
  <script type="text/javascript" src="javascript/PPTournamentLoader.js"></script>
  <script type="text/javascript" src="javascript/PPFileManager.js"></script>
@@ -61,11 +62,19 @@
       tournamentLoader.generateRadioList("tournamentTypeList");
     };
 
+    function createApp() {
+      var editController = new PPSinglesEditController("tournamentNameTextField",
+                          "player1TextField", "player2TextField",
+                          "player1WinnerRadio","player2WinnerRadio" );
+      var view = new PPCanvasView("tournamentCanvas");
+      return new PPApplication(editController, view );
+    }
+
     // Global variables.
-    var theApp = new PPApplication(new PPEditController(), new PPCanvasView("tournamentCanvas") );
-    var tournamentLoader = new PPTournamentLoader();
-    var fileManager = new PPFileManager(tournamentLoader);
+    var theApp = createApp();
     var stateManager = new PPStateManager();
+    var tournamentLoader = new PPTournamentLoader(theApp, stateManager);
+    var fileManager = new PPFileManager(tournamentLoader,"saveFileName", "saveData");
 
 
     //  Register tournament types
@@ -176,7 +185,6 @@
         <a href="data:application/json;charset=utf-8, blah blah blah"
            download="output.json"
            target="_blank"
-           onclick="PPFileManager.createFile(this);"
            id="saveData">Download</a>
 
     </div>
