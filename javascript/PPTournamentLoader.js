@@ -49,11 +49,8 @@ PPTournamentLoader.prototype.generateRadioList = function (id) {
     var label = document.createTextNode(typeName);
     tList.appendChild(label);
     var radio = document.createElement('input');
-    // TODO -- setAttributes helper method... two arrays...
-    radio.setAttribute('id', "tTypeRadio" + i);
-    radio.setAttribute('name', "tType");
-    radio.setAttribute('type', "radio");
-    radio.setAttribute('value', typeName);
+    PPUtils.setElementAttributes( radio , ['id', 'name', 'type', 'value'],
+                                          [ "tTypeRadio" + i, "tType", "radio", typeName]);
     if ( i == 0) {
        radio.setAttribute('checked');
     }

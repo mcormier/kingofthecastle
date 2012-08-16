@@ -22,6 +22,12 @@ PPUtils.objectImplementsMethod = function ( obj, method ) {
   return true;
 }
 
+PPUtils.setElementAttributes = function ( element, attributeArray, valuesArray) {
+   for( var i = 0; i < attributeArray.length; i ++ ) {
+     element.setAttribute( attributeArray[i], valuesArray[i]);
+   }
+}
+
 // References:
 //   http://krasimirtsonev.com/blog/article/object-oriented-programming-oop-in-javascript-extending-Inheritance-classes
 //   http://peter.michaux.ca/articles/class-based-inheritance-in-javascript
