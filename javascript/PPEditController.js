@@ -6,7 +6,10 @@ function PPEditController(tournament) {
 PPEditController.prototype.setTournament = function(tournament) {
   this.tournament = tournament;
   this.tournament.addSelectedMatchListener(this);
-  this.selectMatch(this.getSelectedMatch());
+
+  if ( this.isMatchSelected() ) {
+    this.selectMatch(this.getSelectedMatch());
+  }
 }
 
 PPEditController.prototype.setMatchWinner = function() {throw new Error("Abstract method PPEditController.setMatchWinner"); }
@@ -23,6 +26,11 @@ PPEditController.prototype.updatePlayer1 = function (id) {
 PPEditController.prototype.updatePlayer2 = function (id) {
   var value = $(id).value;
   this.getSelectedMatch().setPlayer2Name(value);
+}
+
+PPEditController.prototype.isMatchSelected = function () {
+  if ( this.tournament.getSelectedMatch() != null ) { return true;}
+  return false;
 }
 
 PPEditController.prototype.getSelectedMatch = function() {
