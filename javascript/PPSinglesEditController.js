@@ -46,6 +46,11 @@ PPSinglesEditController.prototype.setMatchWinner = function() {
 
 }
 
+PPSinglesEditController.prototype.setTournament = function(tournament) {
+  PPSinglesEditController.superproto.setTournament.call(this, tournament);
+  $(this.tournamentTitleTextId).value = this.tournament.name;
+}
+
 PPSinglesEditController.prototype.disablePlayerTextFields = function (state)  {
        $(this.player1TextId).disabled = state;
        $(this.player2TextId).disabled = state;
