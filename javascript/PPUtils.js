@@ -22,6 +22,15 @@ PPUtils.objectImplementsMethod = function ( obj, method ) {
   return true;
 }
 
+PPUtils.objectImplementsMethods = function ( obj, methodArray ) {
+  for (var i = 0; i < methodArray.length; i++) {
+    if ( PPUtils.objectImplementsMethod(obj, methodArray[i]) == false) {
+      return false;
+    }
+  }
+  return true;
+}
+
 PPUtils.setElementAttributes = function ( element, attributeArray, valuesArray) {
    for( var i = 0; i < attributeArray.length; i ++ ) {
      element.setAttribute( attributeArray[i], valuesArray[i]);
