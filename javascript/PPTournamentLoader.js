@@ -63,6 +63,8 @@ PPTournamentLoader.prototype.generateRadioList = function (id) {
 }
 
 PPTournamentLoader.prototype.getSaveData = function() {
+   // Escape encodes % but does not encode * @ etc
+    // TODO test with those characters...
   return escape(JSON.stringify(this.theApp.tournament));
 }
 

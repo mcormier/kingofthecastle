@@ -29,9 +29,6 @@ PPFileManager.prototype.bind = function () {
 PPFileManager.prototype.createFile = function () {
   var a = $(this.saveLinkId);
   var filename = $(this.textInputId).value;
-
-  // Escape encodes % but does not encode * @ etc
-  // TODO test with those characters...
   var data = this.delegate.getSaveData();
 
   a.href = "data:application/json;charset=utf-8," + data;
