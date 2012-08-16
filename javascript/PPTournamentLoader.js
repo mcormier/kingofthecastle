@@ -72,13 +72,9 @@ PPTournamentLoader.prototype.process = function(data) {
   // "PPTennisTournament" ==> new PPTennisTournament();
   var tournament = eval("new " + jsonData.class +"();");
   tournament.name = jsonData.name;
-  // TODO -- this could be a bound configuration, push to edit controller?
-  console.log("TODO -- remove hardcoded element name.")
-  $("tournamentNameTextField").value = tournament.name;
   tournament.loadRoundsFromJSON(jsonData.rounds);
 
   this.theApp.setTournament(tournament);
   this.stateManager.startTournament();
-
   this.theApp.redraw();
 }
