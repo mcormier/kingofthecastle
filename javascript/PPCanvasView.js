@@ -50,6 +50,9 @@ function PPCanvasView(elementName, tournament) {
 
   if (tournament != null ) { this.setTournament(tournament); }
 
+  this.selectedMatchColor = "#FF0000";
+  this.strokeColor = "#000000";
+
   var self = this;
   PPUtils.bind("load", window, function () {self.onLoad();} );
 
@@ -90,7 +93,7 @@ PPCanvasView.prototype.setCanvas = function(canvas) {
   this.context =  this.canvas.getContext("2d");
 
   this.context.lineWidth = 1;
-  this.context.strokeStyle = "black";
+  this.context.strokeStyle = this.strokeColor;
 }
 
 PPCanvasView.prototype.clearDisplay = function() {
@@ -140,7 +143,7 @@ PPCanvasView.prototype.drawRound = function( roundNumber ) {
       var curMatch = rounds[roundNumber][i];
       var gMatch = this.getCoordMatch(roundNumber, i);
       if (curMatch.selected) {
-        context.fillStyle="#FF0000";  // TODO -- push this out to a configuration class.
+        context.fillStyle=this.selectedMatchColor;
         context.fillRect( gMatch.x, gMatch.y, this.matchWidth, this.matchHeight);
         context.rect( gMatch.x, gMatch.y, this.matchWidth, this.matchHeight);
       } else {
