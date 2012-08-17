@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>PPTournament tests</title>
+
+  <link rel="stylesheet" href="qunit.css" />
+  <script src="qunit.js"></script>
+  <script src="../javascript/PPUtils.js"></script>
+  <script src="../javascript/PPMatch.js"></script>
+  <script src="../javascript/PPPlayer.js"></script>
+  <script src="../javascript/PPTournament.js"></script>
+
+  <script>
+    test("Tournament.createBlankData", function() {
+      var tournament = new PPTournament();
+
+      var initialMatches = 2;
+      var numberOfRounds = 2;
+
+      for (var i = 4; i <= 64; i++ ) {
+        tournament.createBlankData(i);
+        equal(tournament.matchesForRound(0), initialMatches);
+        equal(tournament.numberOfRounds(), numberOfRounds);
+        if ( PPUtils.isPowerOf2(i) ) {
+          initialMatches *= 2;
+          numberOfRounds += 1;
+        }
+      }
+
+    });
+
+  </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
