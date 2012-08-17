@@ -94,15 +94,41 @@ PPTournament.prototype.setMaxNumberOfPlayers = function (maxPlayerNumber) {
 
 }
 
+// The number of rounds is the number of arrays in our two
+// sided rounds array that have 1 or more matches.
+PPTournament.prototype.numberOfRounds = function () {
+  for( var i = 0; i < this.rounds.length; i ++) {
+    if (this.rounds[i].length == 0) { break; }
+  }
+  return i;
+}
 
-// TODO -- assumes number of 4,8,16,32,64
-// Support intermediate player numbers...
+// Returns the number of matches that need to be played
+// for a round.
+PPTournament.prototype.matchesForRound = function (round) {
+   return this.rounds[round].length;
+}
+
 PPTournament.prototype.createBlankData = function (playerNumber) {
+  if (playerNumber < 4) {
+    throw Error("Invalid input");
+  }
   this.clearRounds();
-  this.maxPlayerCount = playerNumber;
+
+  // If the player number is not a power of 2 then
+  // determine the next power of 2 and use that.  For example,
+  // if there are only 5 players then you will need to setup
+  // 8 matches but 3 of those matches will have byes defined instead
+  // of an actual player
+  if( ! PPUtils.isPowerOf2(playerNumber) ) {
+    this.maxPlayerCount = Math.pow(2, Math.ceil(Math.log(playerNumber)/Math.log(2)));
+   }  else {
+    this.maxPlayerCount = playerNumber;
+  }
+
 
   var rnd = 0;
-  for(var x = playerNumber/2; x >= 1; x = x/2 ) {
+  for(var x = this.maxPlayerCount/2; x >= 1; x = x/2 ) {
     for (var i = 0; i < x; i++) {
       var match = new PPMatch(rnd, i, this);
       this.rounds[rnd].push( match );
