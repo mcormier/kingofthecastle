@@ -6,12 +6,8 @@ function PPTournament(name) {
 
   Object.defineProperty( this, 'selectedMatch', {
        get: function() { return this.selectedMatchValue; },
-       // TODO -- extract a notify listeners pattern?
        set: function(newValue) {  this.selectedMatchValue = newValue;
-                                  for (var i = 0 ; i < this.selectedMatchListeners.length; i++) {
-                                    var obj = this.selectedMatchListeners[i];
-                                    obj.selectMatch(this.selectedMatch);
-                                  }
+                                  PPUtils.notifyListeners(this.selectedMatchListeners, "selectMatch", this.selectedMatch);
                                },
        configurable:true,
        enumerable:false  // exclude from JSON
@@ -20,10 +16,7 @@ function PPTournament(name) {
  Object.defineProperty( this, 'maxPlayerCount', {
        get: function() { return this.maxCount; },
        set: function(newValue) {  this.maxCount = newValue;
-                                  for (var i = 0 ; i < this.playerCountListeners.length; i++) {
-                                    var obj = this.playerCountListeners[i];
-                                    obj.maxPlayerCountChanged(this.maxCount);
-                                  }
+                                  PPUtils.notifyListeners(this.playerCountListeners, "maxPlayerCountChanged", this.maxCount);
                                },
        configurable:true,
        enumerable:false  // exclude from JSON

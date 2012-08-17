@@ -72,3 +72,11 @@ PPUtils.bind = function(event, element, callback) {
     element.attachEvent(event, callback);
   }
 }
+
+
+PPUtils.notifyListeners = function (listenersArray, listenerMethod,value ) {
+  for (var i = 0 ; i < listenersArray.length; i++) {
+    var obj = listenersArrays[i];
+    obj[listenerMethod](value);
+  }
+}
