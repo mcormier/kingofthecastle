@@ -1,14 +1,15 @@
 
-function PPCanvasViewMatch(round, position) {
-  this.x = PPCanvasView.xPadding + round * PPCanvasView.matchWidth + round * PPCanvasView.connectorLength * 2;
-  this.y = this._match_calculateY(round, position);
+function PPCanvasViewMatch(parent, round, position) {
+  this.parent = parent;
+  this.x = parent.xPadding + round * parent.matchWidth + round * parent.connectorLength * 2;
+  this.y = this._match_calculateY(parent, round, position);
 }
 
-PPCanvasViewMatch.prototype._match_calculateY = function (round, position ) {
+PPCanvasViewMatch.prototype._match_calculateY = function (parent, round, position ) {
   var y;
   var yMult = Math.pow(2,round) - 1;
   if ( round < 2 ) { yMult = round; }
-  y = PPCanvasView.yPadding + yMult * (PPCanvasView.matchHeight / 2) + yMult * (PPCanvasView.yPadding/2);
+  y = parent.yPadding + yMult * (parent.matchHeight / 2) + yMult * (parent.yPadding/2);
 
   var yDeltaMult = round + 1;
   if ( round > 1) { yDeltaMult = round * 2; }
@@ -16,10 +17,10 @@ PPCanvasViewMatch.prototype._match_calculateY = function (round, position ) {
   if ( round > 0 ) {
      var connMult = Math.pow(2, round - 1);
      if ( round == 0 ) { connMult = 0; }
-     var yDelta = connMult * PPCanvasView.matchHeight/2 + connMult * PPCanvasView.yPadding/2;
+     var yDelta = connMult * parent.matchHeight/2 + connMult * parent.yPadding/2;
      y += yDelta *4 * position;
     } else {
-     y += (PPCanvasView.matchHeight * (yDeltaMult) + PPCanvasView.yPadding * (yDeltaMult)) * position;
+     y += (parent.matchHeight * (yDeltaMult) + parent.yPadding * (yDeltaMult)) * position;
     }
 
   return y;
@@ -28,8 +29,8 @@ PPCanvasViewMatch.prototype._match_calculateY = function (round, position ) {
 // Public instance methods
 PPCanvasViewMatch.prototype.pointSelectsMatch = function(point) {
 
-  if ( point.x >= this.x && point.x <= this.x + PPCanvasView.matchWidth  &&
-       point.y >= this.y && point.y <= this.y + PPCanvasView.matchHeight) {
+  if ( point.x >= this.x && point.x <= this.x + this.parent.matchWidth  &&
+       point.y >= this.y && point.y <= this.y + this.parent.matchHeight) {
     return true;
   }
 
@@ -120,7 +121,7 @@ PPCanvasView.prototype.getConnectorLengthMultiplier = function (roundNumber) {
 PPCanvasView.prototype.getCoordMatch = function(round, position) {
   var theMatch = this.matchCordData[round][position];
   if (theMatch == null ) {
-    theMatch = new PPCanvasViewMatch(round, position);
+    theMatch = new PPCanvasViewMatch(this, round, position);
     this.matchCordData[round][position] = theMatch;
   }
 
@@ -140,31 +141,30 @@ PPCanvasView.prototype.drawRound = function( roundNumber ) {
       var gMatch = this.getCoordMatch(roundNumber, i);
       if (curMatch.selected) {
         context.fillStyle="#FF0000";  // TODO -- push this out to a configuration class.
-        context.fillRect( gMatch.x, gMatch.y, PPCanvasView.matchWidth, PPCanvasView.matchHeight);
-        context.rect( gMatch.x, gMatch.y, PPCanvasView.matchWidth, PPCanvasView.matchHeight);
+        context.fillRect( gMatch.x, gMatch.y, this.matchWidth, this.matchHeight);
+        context.rect( gMatch.x, gMatch.y, this.matchWidth, this.matchHeight);
       } else {
-        context.rect( gMatch.x, gMatch.y, PPCanvasView.matchWidth, PPCanvasView.matchHeight);
+        context.rect( gMatch.x, gMatch.y, this.matchWidth, this.matchHeight);
       }
 
-      var connectorY = gMatch.y + PPCanvasView.matchHeight /2;
+      var connectorY = gMatch.y + this.matchHeight /2;
       var connectorX = gMatch.x;
       var connMult = this.getConnectorLengthMultiplier(roundNumber);
-      var yDelta = connMult * PPCanvasView.matchHeight/2 + connMult * PPCanvasView.yPadding/2;
+      var yDelta = connMult * this.matchHeight/2 + connMult * this.yPadding/2;
       // Draw lines from this match back to last round
       if ( roundNumber > 0 ) {
         context.moveTo(connectorX, connectorY );
-        context.lineTo(connectorX - PPCanvasView.connectorLength, connectorY);
-
-        context.lineTo(connectorX - PPCanvasView.connectorLength, connectorY - yDelta);
-        context.moveTo(connectorX - PPCanvasView.connectorLength, connectorY);
-        context.lineTo(connectorX - PPCanvasView.connectorLength, connectorY + yDelta);
+        context.lineTo(connectorX - this.connectorLength, connectorY);
+        context.lineTo(connectorX - this.connectorLength, connectorY - yDelta);
+        context.moveTo(connectorX - this.connectorLength, connectorY);
+        context.lineTo(connectorX - this.connectorLength, connectorY + yDelta);
       }
 
       // Draw lines from match to next round
       if ( rounds[roundNumber+1].length > 0 ) {
-        connectorX = gMatch.x + PPCanvasView.matchWidth;
+        connectorX = gMatch.x + this.matchWidth;
         context.moveTo(connectorX, connectorY );
-        context.lineTo(connectorX + PPCanvasView.connectorLength, connectorY);
+        context.lineTo(connectorX + this.connectorLength, connectorY);
       }
 
     }
@@ -218,21 +218,13 @@ PPCanvasView.prototype.handleClick = function (e) {
 }
 
 PPCanvasView.prototype.setDrawingConstants = function (matchWidth, matchHeight, xPadding, yPadding, connLen ) {
-       PPCanvasView.matchWidth = matchWidth;
-       PPCanvasView.matchHeight = matchHeight;
-       PPCanvasView.connectorLength = connLen;
-       PPCanvasView.yPadding = yPadding;
-       PPCanvasView.xPadding = xPadding;
+       this.matchWidth = matchWidth;
+       this.matchHeight = matchHeight;
+       this.connectorLength = connLen;
+       this.yPadding = yPadding;
+       this.xPadding = xPadding;
 
        // The drawing constants changed because the max number of players changed.  Clear the cached location data.
        // TODO -- probably a better location for this.
        this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 }
-
-// TODO -- why use static class variables?
-// Static class variables
-PPCanvasView.matchWidth = 0;
-PPCanvasView.matchHeight = 0;
-PPCanvasView.connectorLength = 0;
-PPCanvasView.yPadding = 0;
-PPCanvasView.xPadding = 0;
