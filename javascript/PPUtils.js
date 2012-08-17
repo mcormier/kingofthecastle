@@ -87,7 +87,7 @@ PPUtils.isPowerOf2 = function(x) {
 
 PPUtils.notifyListeners = function (listenersArray, listenerMethod,value ) {
   for (var i = 0 ; i < listenersArray.length; i++) {
-    var obj = listenersArrays[i];
+    var obj = listenersArray[i];
     obj[listenerMethod](value);
   }
 }
