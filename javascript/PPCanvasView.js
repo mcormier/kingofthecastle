@@ -45,8 +45,7 @@ function PPCanvasView(elementName, tournament) {
   if (elementName == null ) { throw new Error("PPCanvasView missing required parameter."); }
   this.elementName = elementName;
 
-  // A 2 sided array that stores all our x, y match data
-  this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
+  this.clearMatchMetaData();
 
   if (tournament != null ) { this.setTournament(tournament); }
 
@@ -56,6 +55,11 @@ function PPCanvasView(elementName, tournament) {
   var self = this;
   PPUtils.bind("load", window, function () {self.onLoad();} );
 
+}
+
+PPCanvasView.prototype.clearMatchMetaData = function () {
+ // A 2 sided array that stores all our match meta data (x, y coordinates)
+  this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
 }
 
 PPCanvasView.prototype.onLoad = function () {
@@ -223,7 +227,6 @@ PPCanvasView.prototype.setDrawingConstants = function (matchWidth, matchHeight, 
        this.yPadding = yPadding;
        this.xPadding = xPadding;
 
-       // The drawing constants changed because the max number of players changed.  Clear the cached location data.
-       // TODO -- probably a better location for this.
-       this.matchCordData =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
-}
+       // Since the drawing constants have changed, clear the cached location data.
+        this.clearMatchMetaData();
+ }
