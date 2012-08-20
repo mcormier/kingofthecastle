@@ -113,12 +113,8 @@ PPCanvasView.prototype.draw = function() {
 }
 
 
-// TODO -- this is gross.. remove
 PPCanvasView.prototype.getConnectorLengthMultiplier = function (roundNumber) {
-       if ( roundNumber == 5 ) { return 16; }
-       if ( roundNumber == 4 ) { return 8; }
-       if ( roundNumber == 3 ) { return 4; }
-       return roundNumber;
+       return Math.pow(2,roundNumber - 1);
 }
 
 PPCanvasView.prototype.getCoordMatch = function(round, position) {
