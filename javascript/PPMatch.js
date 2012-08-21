@@ -1,6 +1,4 @@
 
-// TODO -- recursive code is fun but annoying to debug in the long run...rearchitect
-
 //
 // round: a number between 0 and 5 representing the round of play.  I.E. quarter finals, finals
 // position: a number representing the match number in the round
