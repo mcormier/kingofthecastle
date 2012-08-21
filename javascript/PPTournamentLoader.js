@@ -8,6 +8,8 @@ function PPTournamentLoader(theApp, stateManager) {
   this.stateManager = stateManager;
 
   this.tournamentTypes = new Array();
+
+  this.loader = new PPJSONLoader();
 }
 
 
@@ -63,14 +65,12 @@ PPTournamentLoader.prototype.generateRadioList = function (id) {
 }
 
 PPTournamentLoader.prototype.getSaveData = function() {
-   // Escape encodes % but does not encode * @ etc
-    // TODO test with those characters...
-  return escape(JSON.stringify(this.theApp.tournament));
+  return this.loader.getURIData(this.theApp.tournament);
 }
 
 
 PPTournamentLoader.prototype.process = function(data) {
-  var jsonData = JSON.parse(data);
+  var jsonData = this.loader.loadData(data);
 
   // Convert string to new object statement:
   // "PPTennisTournament" ==> new PPTennisTournament();

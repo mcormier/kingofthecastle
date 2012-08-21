@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>String escape tests</title>
+
+  <link rel="stylesheet" href="qunit.css" />
+  <script src="qunit.js"></script>
+  <script src="../javascript/PPJSONLoader.js"></script>
+
+  <script>
+    "use strict";
+
+    test("PPJSONLoader.encode", function() {
+      var loader = new PPJSONLoader();
+
+      var stringConstant = "My @ name";
+      var encodedStringData = loader.getURIData(stringConstant);
+      var reloadedData = loader.loadData(encodedStringData);
+
+      equal(stringConstant, reloadedData);
+
+    });
+
+  </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
