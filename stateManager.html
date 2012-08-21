@@ -1,0 +1,199 @@
+<html lang="en">
+<head>
+	<title>Players Draw</title>
+  <link rel="stylesheet" href="style.css"/>
+
+ <script type="text/javascript" src="javascript/PPUtils.js"></script>
+ <script type="text/javascript" src="javascript/PPApplication.js"></script>
+ <script type="text/javascript" src="javascript/PPCanvasView.js"></script>
+ <script type="text/javascript" src="javascript/PPEditController.js"></script>
+ <script type="text/javascript" src="javascript/PPSinglesEditController.js"></script>
+ <script type="text/javascript" src="javascript/PPStateManager.js"></script>
+ <script type="text/javascript" src="javascript/PPTournamentLoader.js"></script>
+ <script type="text/javascript" src="javascript/PPFileManager.js"></script>
+ <script type="text/javascript" src="javascript/PPPlayer.js"></script>
+ <script type="text/javascript" src="javascript/PPPoint.js"></script>
+
+ <script type="text/javascript" src="javascript/PPTournament.js"></script>
+ <script type="text/javascript" src="javascript/PPCribTournament.js"></script>
+ <script type="text/javascript" src="javascript/PPTennisTournament.js"></script>
+
+ <script type="text/javascript" src="javascript/PPMatch.js"></script>
+
+  <script>
+    "use strict";
+    // Requires:
+    // ECMAScript 5
+    // HTML 5 Canvas support
+    // HTML 5 "a" download attribute
+    // HTML 5 FileReader
+
+    // 2 rounds = 4 players
+    // 3 rounds = 8 players
+    // 4 rounds = 16 players
+    // 5 rounds = 32 players
+    // 6 rounds = 64 players
+
+
+    function handlePlayerNumberCombo(combo) {
+    var selIndex = combo.selectedIndex;
+
+    initializeData(selIndex);
+    theApp.redraw();
+    }
+
+    function isDoubles() {
+    console.log("TODO -- support doubles");
+    }
+
+    function initializeData(selIndex) {
+    // Player number = 2 to the power of (selIndex + 2)
+    // (0,1,2,3,4) ==> (4,8,16,32,64)
+    theApp.tournament.createBlankData(Math.pow(2,selIndex + 2));
+    }
+
+    function handleFileSelect(evt) {
+    fileManager.handleFileSelect(evt);
+    }
+
+    function init() {
+      PPUtils.bind("change", $("fileLoader"), handleFileSelect);
+      PPUtils.bindTextField("keyup", $("tournamentNameTextField"), theApp, "titleChanged");
+      tournamentLoader.generateRadioList("tournamentTypeList");
+    };
+
+    function createApp() {
+      var editController = new PPSinglesEditController("tournamentNameTextField",
+                          "player1TextField", "player2TextField",
+                          "player1WinnerRadio","player2WinnerRadio" );
+      var view = new PPCanvasView("tournamentCanvas");
+      return new PPApplication(editController, view );
+    }
+
+    // Global variables.
+    var theApp = createApp();
+    var stateManager = new PPStateManager();
+    var tournamentLoader = new PPTournamentLoader(theApp, stateManager);
+    var fileManager = new PPFileManager(tournamentLoader,"saveFileName", "saveData");
+
+
+    //  Register tournament types
+    tournamentLoader.registerTournamentTypes( [PPTennisTournament, PPCribTournament] );
+
+    // BEGIN StateManager Hook functions -----------------------------------------------------------
+    function stateBeginHook() { }
+    function stateChooseTournamentHook() {
+    }
+    function stateLoadTournamentHook() {  }
+    function stateConfigureTournamentHook() {
+    var tournament = tournamentLoader.getSelectedTournamentType();
+    var selIndex  = $("numberOfPlayersCombo").selectedIndex;
+    tournament.createBlankData(Math.pow(2,selIndex + 2));
+
+    theApp.setTournament(tournament);
+    theApp.redraw();
+    }
+    function stateStartTournamentHook() {
+    showElement($("tournamentTitle"));
+
+    theApp.editController.disablePlayerTextFields(true);
+    theApp.editController.disableWinnerRadioButtons(true);
+    }
+    // END StateManager Hook functions -----------------------------------------------------------
+
+    stateManager.linkDivsAndHooksToStates(
+    ["begin", "chooseTournamentType", "configureTournament", "matchEditor", "loadTournament"],
+    [stateBeginHook, stateChooseTournamentHook, stateConfigureTournamentHook, stateStartTournamentHook, stateLoadTournamentHook],
+    [PPState.START, PPState.CHOOSE_TOURNAMENT, PPState.CONFIGURE_TOURNAMENT, PPState.START_TOURNAMENT, PPState.LOAD_TOURNAMENT] );
+
+    PPUtils.bind("load", window, init);
+  </script>
+
+</head>
+
+
+
+
+
+
+<body>
+
+<div id="tournamentTitle">
+
+    <center><input id="tournamentNameTextField" type="text" size="50" placeholder="Tournament Name" value=""></center>
+</div>
+
+
+
+<div id="leftColumn">
+
+    <div id="begin">
+        <input type="submit" value="New Tournament" onclick="stateManager.newTournament();"/>
+        <input type="submit" value="Load Tournament" onclick="stateManager.loadTournament();"/>
+    </div>
+
+    <div id="loadTournament">
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input id="fileLoader" type="file" >
+    </div>
+
+    <div id="chooseTournamentType">
+        Choose Tournament Type: <BR>
+        <blah id="tournamentTypeList"></blah>
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input type="submit" value="configure" onclick="stateManager.configureTournament();"/>
+    </div>
+
+    <div id="configureTournament">
+        How many players will be in the tournament?<br>
+        <select id="numberOfPlayersCombo" name="playerNumber" onChange="handlePlayerNumberCombo(this)">
+            <option value="0">3 to 4</option>
+            <option value="1">5 to 8 </option>
+            <option value="2">9 to 16</option>
+            <option value="3" selected>17 to 32</option>
+            <option value="4">33 to 64</option>
+        </select>
+
+        <BR>
+        <input type="checkbox" name="vehicle" value="Doubles" onclick="isDoubles();"/> Doubles<br />
+
+        <input type="submit" value="back" onclick="stateManager.back();"/>
+        <input type="submit" value="start" onclick="stateManager.startTournament();"/>
+
+    </div>
+
+    <div id="matchEditor">
+        <table>
+            <thead>
+                    <tr><td>Player</td><td>Winner</td></tr>
+            </thead>
+            <tr>
+                <td><input id="player1TextField" type="text" size="25" value="" onkeyup="theApp.editController.updatePlayer1(this.id);"></td>
+                <td><input id="player1WinnerRadio" type="radio" name="winner" value="player1" onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+            <tr>
+                <td><input id="player2TextField" type="text" size="25" value="" onkeyup="theApp.editController.updatePlayer2(this.id);"></td>
+                <td><input id="player2WinnerRadio" type="radio" name="winner" value="player2" onclick="theApp.editController.setMatchWinner();"></td>
+            </tr>
+        </table>
+         <BR><BR>
+
+
+        <input id="saveFileName"
+               type="text" value="tournament.json" placeholder="filename.txt">
+
+        <a href="data:application/json;charset=utf-8, blah blah blah"
+           download="output.json"
+           target="_blank"
+           id="saveData">Download</a>
+
+    </div>
+
+</div>
+
+<canvas id="tournamentCanvas" width="800" height="600" ></canvas>
+
+</body>
+
+
+</html>
