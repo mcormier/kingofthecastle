@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Object extension tests</title>
+
+  <link rel="stylesheet" href="qunit.css" />
+  <script src="qunit.js"></script>
+  <script src="../javascript/PPUtils.js"></script>
+
+  <script>
+    "use strict";
+
+    function TypeA(name) {
+      this.name = name;
+    }
+
+    TypeA.prototype.getName = function() { return this.name; }
+
+    function TypeB(name) {
+      TypeB.superclass.call(this, name + "B");
+    }
+
+    PPUtils.extend (TypeB, TypeA);
+
+    function TypeC(name) {
+      TypeC.superclass.call(this, name + "C");
+    }
+
+    PPUtils.extend (TypeC, TypeB);
+
+
+
+    test("PPUtils.extending", function() {
+      var A = new TypeA("String");
+      var B = new TypeB("String");
+      var C = new TypeC("String");
+
+      equal("String", A.getName());
+      equal("StringB", B.getName());
+      equal("StringCB", C.getName());
+
+    });
+
+  </script>
+</head>
+<body>
+<div id="qunit"></div>
+</body>
+</html>
