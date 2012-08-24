@@ -1,5 +1,5 @@
-function PPTennisTournament(name) {
-  PPTennisTournament.superclass.call(this, name);
+function PPTennisTournament(name, isDoubles) {
+  PPTennisTournament.superclass.call(this, name, isDoubles);
   this.class = PPTennisTournament.className();
 }
 

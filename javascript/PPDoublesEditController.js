@@ -21,6 +21,13 @@ PPDoublesEditController.prototype.bind = function () {
   PPUtils.bind("keyup", $(this.player2bTextId), function () {self.updatePlayer2b(self.player2bTextId);} );
 }
 
+PPDoublesEditController.prototype.disablePlayerTextFields = function (state)  {
+   PPDoublesEditController.superproto.disablePlayerTextFields.call(this, state);
+   $(this.player1bTextId).disabled = state;
+   $(this.player2bTextId).disabled = state;
+}
+
+
 PPDoublesEditController.prototype.updatePlayer1b = function (id) {
 //  var value = $(id).value;
 //  this.getSelectedMatch().setPlayer1Name(value);

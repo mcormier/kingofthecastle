@@ -1,5 +1,6 @@
-function PPTournament(name) {
+function PPTournament(name, isDoubles) {
   this.setName(name);
+  this.doubles = isDoubles;
 
   // A 2 sided array stores all our match data
   this.rounds =  [ new Array(), new Array(), new Array(), new Array(), new Array(), new Array(), new Array()];
@@ -66,8 +67,11 @@ PPTournament.prototype.clearRounds = function () {
 PPTournament.prototype.loadRoundsFromJSON = function (jsonData) {
   this.maxPlayerCount = jsonData[0].length * 2;
 
+  console.log("TODO -- loadRoundsFromJSON check if this is doubles...");
+
   for(var i = 0; i < jsonData.length; i++ ) {
       for (var j = 0; j < jsonData[i].length; j++) {
+
         this.rounds[i][j] = PPMatch.fromObject(i, j, jsonData[i][j], this);
       }
     }
@@ -126,11 +130,16 @@ PPTournament.prototype.createBlankData = function (playerNumber) {
     this.maxPlayerCount = playerNumber;
   }
 
-
   var rnd = 0;
   for(var x = this.maxPlayerCount/2; x >= 1; x = x/2 ) {
     for (var i = 0; i < x; i++) {
-      var match = new PPMatch(rnd, i, this);
+      var match;
+      if (this.isDoubles) {
+        match = new PPDoublesMatch(rnd, i, this);
+      }
+      else {
+        match = new PPMatch(rnd, i, this);
+      }
       this.rounds[rnd].push( match );
     }
     rnd++;

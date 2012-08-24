@@ -61,7 +61,7 @@
     function init() {
       PPUtils.bindTextField("keyup", $("tournamentNameTextField"), theApp, "titleChanged");
 
-    var tournament = new PPTennisTournament("Doubles Test");
+    var tournament = new PPTennisTournament("Doubles Test", true);
     tournament.createBlankData(4);
     theApp.setTournament(tournament);
     theApp.redraw();
